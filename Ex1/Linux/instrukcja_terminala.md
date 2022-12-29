@@ -23,7 +23,7 @@ Niestety, rozmiar plików i katalogów nie jest dla nas czytelny więc aktualizu
 
 ## Przykład 2
 
-Jako prowadzacy, mając trzech studentów, dla których przygotuję po trzy zadania, z pytaniami i odpowiedziami, chciałbym przygotować odpowiednią strukturę folderów. Aby to wykonać wykonuję komendę `tree`, aby otrzymać następujący wynik:
+Jako prowadzacy, mając trzech studentów, dla których przygotuję po trzy zadania, z pytaniami i odpowiedziami, chciałbym przygotować odpowiednią strukturę folderów. Aby to wykonać wykonuję komendę `mkdir -p `, aby otrzymać następujący wynik:
 
 ![struktura_plików](./img/Linux-oczekiwana_struktura.jpg)
 

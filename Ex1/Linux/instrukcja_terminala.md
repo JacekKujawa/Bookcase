@@ -23,7 +23,8 @@ Niestety, rozmiar plików i katalogów nie jest dla nas czytelny więc aktualizu
 
 ## Przykład 2
 
-Jako prowadzacy, mając trzech studentów, dla których przygotuję po trzy zadania, z pytaniami i odpowiedziami, chciałbym przygotować odpowiednią strukturę folderów. Aby to wykonać wykonuję komendę `mkdir -p `, aby otrzymać następujący wynik:
+Jako prowadzacy, mając trzech studentów, dla których przygotuję po trzy zadania, z pytaniami i odpowiedziami, chciałbym przygotować odpowiednią strukturę folderów. Aby to wykonać wykonuję komendę `mkdir -p homework/{student1/{task1/{quetion,answer},task2/{quetion,answer},task3/{quetion,answer}},student2/{task1/{quetion,answer},task2/{quetion,answer},task3/{quetion,answer}},student3/{task1/{quetion,answer},task2/{quetion,answer},task3/{quetion,answer}}}
+`, aby otrzymać następujący wynik:
 
 ![struktura_plików](./img/Linux-oczekiwana_struktura.jpg)
 

@@ -20,6 +20,12 @@ public class BootcampApp {
         student2.setFirstName("Felix");
         student2.setLastName("Drzazga");
 
+        System.out.println(scoreS1.getStudent().getFirstName()+" "+scoreS1.getStudent().getLastName()+
+                " za zadanie "+scoreS1.getTask().getTaskNumber()+" otrzymał "+scoreS1.getScoreNumber()+" punktów. ");
+        System.out.println(scoreS2.getStudent().getFirstName()+" "+scoreS2.getStudent().getLastName()+
+                " za zadanie "+scoreS2.getTask().getTaskNumber()+" otrzymał "+scoreS2.getScoreNumber()+" punktów. ");
+
+
 
 
 

@@ -4,7 +4,7 @@ public class Task {
 
     private String taskNumber;
     private String taskCommand;
-    private int taskpoints;
+    private int taskPoints;
 
     public String getTaskNumber() {
         return taskNumber;
@@ -23,10 +23,10 @@ public class Task {
     }
 
     public int getTaskpoints() {
-        return taskpoints;
+        return taskPoints;
     }
 
-    public void setTaskpoints(int taskpoints) {
-        this.taskpoints = taskpoints;
+    public void setTaskpoints(int taskPoints) {
+        this.taskPoints = taskPoints;
     }
 }

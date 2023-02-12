@@ -10,6 +10,7 @@ public class ReadNumber {
     public void data() {
         Security s1 = new Security();
         do {
+            // exception start
             try {
                 // Make new object d1,s1,scanner
                 Scanner scanner = new Scanner(System.in);
@@ -21,7 +22,7 @@ public class ReadNumber {
             } catch (InputMismatchException e) {
                 System.out.println("Błąd formatu danych!!! Podaj liczby (" + e + ")");
             }
-
+            //numbers check
             s1.security(range, quantity);
 
         } while (s1.isS());

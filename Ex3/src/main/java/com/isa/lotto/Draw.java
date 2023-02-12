@@ -11,7 +11,7 @@ public class Draw {
         this.array = new int[n];
         this.resultArray = new int[n];
     }
-
+    //generate numbers in array
     public void generate(int n) {
         Random rand = new Random();
         for (int i = 0; i < array.length; i++) {
@@ -29,7 +29,7 @@ public class Draw {
             }
         }
     }
-
+    //write numbers void
     public void write() {
         for (int i = 0; i < k; i++) {
             System.out.println(resultArray[i] + " ");

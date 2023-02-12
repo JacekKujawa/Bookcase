@@ -6,7 +6,6 @@ public class Security {
     private boolean s;
 
     public void security(int x, int y) {
-
         if (y > 0 && x >= y) {      // is the number positive?
             System.out.println("Podane wartości " + x + " i " + y + " są prawidłowe :)");
             s = false;
@@ -20,5 +19,4 @@ public class Security {
     public boolean isS() {
         return s;
     }
-
 }

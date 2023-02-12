@@ -32,6 +32,11 @@ public class Draw {
     //write numbers void
     public void write() {
         for (int i = 0; i < k; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println(resultArray[i] + " ");
         }
     }

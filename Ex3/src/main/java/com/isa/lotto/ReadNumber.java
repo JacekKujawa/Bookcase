@@ -26,6 +26,7 @@ public class ReadNumber {
             s1.security(range, quantity);
 
         } while (s1.isS());
+        System.out.println("Uwaga..uwaga..rozpoczynam..losowanie.."+quantity+"..liczb..z.."+range+"..");
     }
 
     public int getRange() {

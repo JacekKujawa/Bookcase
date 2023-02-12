@@ -1,5 +1,6 @@
 package com.isa.lotto;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ReadNumber {
@@ -9,6 +10,7 @@ public class ReadNumber {
     public void data() {
         Security s1 = new Security();
         do {
+            try {
             // Make new object d1,s1,scanner
             Scanner scanner = new Scanner(System.in);
             // Read range and quantity
@@ -16,7 +18,12 @@ public class ReadNumber {
             range = scanner.nextInt();
             System.out.println("Podaj ile liczb mam wylosować:");
             quantity = scanner.nextInt();
+            } catch (InputMismatchException e){
+                System.out.println("Błąd formatu danych!!! Podaj liczby ("+ e+")");
+            }
+
             s1.security(range, quantity);
+
         } while (s1.isS());
     }
 

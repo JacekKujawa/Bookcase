@@ -11,7 +11,7 @@ public class Security {
             System.out.println("Podane wartości " + x + " i " + y + " są prawidłowe :)");
             s = false;
         } else { //if the number is not positive?
-            System.out.println("Błąd !!! Podane wartości " + x + " i " + y + " muszą być dodatnie oraz zakres większy od ilości liczb:)");
+            System.out.println("Błąd!!! Podane wartości " + x + " i " + y + " muszą być liczbami dodatnimi oraz zakres większy od ilości liczb:)");
             System.out.println("Podaj liczby jeszcze raz:)");
             s = true;
         }

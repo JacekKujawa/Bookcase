@@ -7,7 +7,17 @@ public class Order {
     private Drink drink;
 
 
-    List<ProductList> productListList = new ArrayList<ProductList>();
+    List<Product> productList = new ArrayList<>();
+
+    public List<Product> getAll() {
+        return productList;
+    }
+
+    public void addProduct(Pizza pizza, Drink drink) {
+        productList.add(pizza);
+        productList.add(drink);
+
+    }
 
     public Order(Pizza pizza, String hamburger, Drink drink) {
         this.pizza = pizza;
@@ -15,7 +25,7 @@ public class Order {
         this.drink = drink;
     }
 
-    public Order(List<ProductList> productListList) {
-        this.productListList = productListList;
+    public Order(List<Product> productListList) {
+        this.productList = productListList;
     }
 }

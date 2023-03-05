@@ -1,9 +1,10 @@
 import java.util.Objects;
 
-public class Pizza {
+public class Pizza extends Product {
 private String pizzaName;
 private String pizzaSize;
-    public Pizza(String pizzaName, String pizzaSize) {
+    public Pizza(String pizzaName, String pizzaSize, Integer quantity) {
+        super(quantity);
         this.pizzaName = pizzaName;
         this.pizzaSize = pizzaSize;
 

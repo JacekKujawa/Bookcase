@@ -4,5 +4,10 @@ public enum PizzaName {
     CAPRICCIOSA,
     MARGARITA,
     NAPOLETANA,
-    DIAVIOLA
+    DIAVIOLA;
+
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase();
+    }
 }

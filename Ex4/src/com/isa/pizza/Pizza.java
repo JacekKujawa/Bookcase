@@ -12,6 +12,15 @@ private Enum pizzaSize;
 
     }
 
+    @Override
+    public String toString() {
+        return "Pizza{" +
+                "pizzaName = " + pizzaName.toString() +
+                ", pizzaSize = " + pizzaSize.toString() +
+                ", quantity = " + getQuantity()+
+                '}';
+    }
+
     public Enum getPizzaName() {
         return pizzaName;
     }

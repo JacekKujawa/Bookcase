@@ -5,6 +5,11 @@ public class Drink extends Product {
 
     public Drink(Enum drinkName, Integer quantity) {
         super(quantity);
-        this.drinkName=drinkName;
+        this.drinkName = drinkName;
+    }
+
+    @Override
+    public String toString() {
+        return "Drink{" + "drinkName=" + drinkName + ", quantity = " + getQuantity() + '}';
     }
 }

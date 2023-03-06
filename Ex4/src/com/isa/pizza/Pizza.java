@@ -3,8 +3,9 @@ package com.isa.pizza;
 import java.util.Objects;
 
 public class Pizza extends Product {
-private Enum pizzaName;
-private Enum pizzaSize;
+    private Enum pizzaName;
+    private Enum pizzaSize;
+
     public Pizza(Enum pizzaName, Enum pizzaSize, Integer quantity) {
         super(quantity);
         this.pizzaName = pizzaName;
@@ -14,11 +15,7 @@ private Enum pizzaSize;
 
     @Override
     public String toString() {
-        return "Pizza{" +
-                "pizzaName = " + pizzaName.toString() +
-                ", pizzaSize = " + pizzaSize.toString() +
-                ", quantity = " + getQuantity()+
-                '}';
+        return "Pizza{" + "pizzaName = " + pizzaName.toString() + ", pizzaSize = " + pizzaSize.toString() + ", quantity = " + getQuantity() + '}';
     }
 
     public Enum getPizzaName() {

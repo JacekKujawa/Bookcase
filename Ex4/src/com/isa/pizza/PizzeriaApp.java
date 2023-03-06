@@ -1,16 +1,12 @@
 package com.isa.pizza;
 
-import java.util.List;
-
 public class PizzeriaApp {
     public static void main(String[] args) {
-        Pizza pizza1 = new Pizza(PizzaName.NAPOLETANA, PizzaSize.FAMILY, 1);
-        Drink drink1 = new Drink(DrinkName.COLA, 1);
-        Hamburger hamburger = new Hamburger(1);
-        Client client1 = new Client();
         Order order1 = new Order();
-        System.out.println(pizza1.toString());
-
-
+        System.out.println(order1 + "\n");
+        System.out.println(order1.getClient1().hashCode());
+        System.out.println(order1.getClient2().hashCode());
+        System.out.println(order1.getClient3().hashCode());
+        System.out.println(order1.getClient1().equals(order1.getClient2()));
     }
 }

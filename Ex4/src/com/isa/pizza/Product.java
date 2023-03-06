@@ -1,3 +1,5 @@
+package com.isa.pizza;
+
 public abstract class Product {
     private Integer quantity;
 

@@ -1,28 +1,30 @@
+package com.isa.pizza;
+
 import java.util.Objects;
 
 public class Pizza extends Product {
-private String pizzaName;
-private String pizzaSize;
-    public Pizza(String pizzaName, String pizzaSize, Integer quantity) {
+private Enum pizzaName;
+private Enum pizzaSize;
+    public Pizza(Enum pizzaName, Enum pizzaSize, Integer quantity) {
         super(quantity);
         this.pizzaName = pizzaName;
         this.pizzaSize = pizzaSize;
 
     }
 
-    public String getPizzaName() {
+    public Enum getPizzaName() {
         return pizzaName;
     }
 
-    public void setPizzaName(String pizzaName) {
+    public void setPizzaName(Enum pizzaName) {
         this.pizzaName = pizzaName;
     }
 
-    public String getPizzaSize() {
+    public Enum getPizzaSize() {
         return pizzaSize;
     }
 
-    public void setPizzaSize(String pizzaSize) {
+    public void setPizzaSize(Enum pizzaSize) {
         this.pizzaSize = pizzaSize;
     }
 

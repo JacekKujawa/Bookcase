@@ -1,3 +1,5 @@
+package com.isa.pizza;
+
 public class Client {
 private String name;
 private String address;

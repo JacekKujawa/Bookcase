@@ -4,6 +4,8 @@ public enum PizzaName {
     CAPRICCIOSA,
     MARGARITA,
     NAPOLETANA,
+
+    PEPPERONI,
     DIAVIOLA;
 
     @Override

@@ -1,4 +1,6 @@
-package com.isa.pizza;
+package com.isa.pizzeria;
+
+import com.isa.pizzeria.Order;
 
 public class PizzeriaApp {
     public static void main(String[] args) {

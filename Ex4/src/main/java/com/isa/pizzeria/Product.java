@@ -1,4 +1,4 @@
-package com.isa.pizza;
+package com.isa.pizzeria;
 
 public abstract class Product {
     private Integer quantity;

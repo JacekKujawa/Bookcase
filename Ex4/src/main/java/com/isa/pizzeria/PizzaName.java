@@ -1,4 +1,4 @@
-package com.isa.pizza;
+package com.isa.pizzeria;
 
 public enum PizzaName {
     CAPRICCIOSA,

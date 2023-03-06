@@ -1,4 +1,4 @@
-package com.isa.pizza;
+package com.isa.pizzeria;
 
 public class Order {
     Client client1 = new Client("Zenek", "Łąkowa 11E", "555-555-555");

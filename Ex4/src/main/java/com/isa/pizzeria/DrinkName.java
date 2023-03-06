@@ -1,9 +1,9 @@
-package com.isa.pizza;
+package com.isa.pizzeria;
 
-public enum PizzaSize {
-    SMALL,
-    MIDDLE,
-    FAMILY;
+public enum DrinkName {
+    COLA,
+    BEER,
+    JUICE;
 
     @Override
     public String toString() {

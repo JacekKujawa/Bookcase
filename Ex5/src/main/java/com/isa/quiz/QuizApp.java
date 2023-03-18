@@ -14,10 +14,10 @@ public class QuizApp
         System.out.println("Welcome to Quiz.");
 
         // call the quiz method
-        Question.question1();
+        QuestionPool.question1();
 
 
 
-        System.out.println( "Your quiz score:"+ Question.getPoints() );
+        System.out.println( "Your quiz score:"+ QuestionPool.getPoints() );
     }
 }

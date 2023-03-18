@@ -14,14 +14,11 @@ public class QuizApp {
 //
 //        // call the quiz method
 //        QuestionPool.question1();
-        List<Integer> questionNumb = new ArrayList<>(3);
-        questionNumb.add(Question.questionGenerate());
-        questionNumb.add(Question.questionGenerate());
-
-        Question.questionGenerate();
 
 
-//        System.out.println( "Your quiz score:"+ QuestionPool.getPoints() );
-//    }
+        QuestionPool.question1(1);
+
+        System.out.println( "Your quiz score:"+ QuestionPool.getPoints() );
+
     }
 }

@@ -4,5 +4,9 @@ import java.util.List;
 
 public class Answer {
 
-    List<String> answers = List.of("C","A","B","D","A");
+    private final List<String> answers = List.of("C","A","B","D","A");
+
+    public List<String> getAnswers() {
+        return answers;
+    }
 }

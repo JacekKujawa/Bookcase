@@ -1,9 +1,6 @@
 package com.isa.quiz;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Hello world!
  *
@@ -16,9 +13,9 @@ public class QuizApp {
 //        QuestionPool.question1();
 
 
-        QuestionPool.question1(1);
+        Question.question1(QuestionPool.numberGenerate());
 
-        System.out.println( "Your quiz score:"+ QuestionPool.getPoints() );
+        System.out.println( "Your quiz score: "+ Question.getPoints() );
 
     }
 }

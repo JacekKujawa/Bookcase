@@ -1,45 +1,29 @@
 package com.isa.quiz;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.Random;
 
 public class QuestionPool {
-    private static Integer points = 0;
-    private static String answer;
 
+    public static int[] questionNumberGenerate() {
 
+        int[] questionNumb = new int[4];
+        questionNumb[0]=numberGenerate();
 
-    static Scanner scanner = new Scanner(System.in);
+        for (int i = 1; i < questionNumb.length; i++) {
 
+            questionNumb[i]=numberGenerate();
+            if(questionNumb[i-1]==questionNumb[i])
+            {
+                i--;
+            }
 
-
-    public static Integer getPoints() {
-        return points;
-    }
-
-    public static void question1(int num) {
-        Answer a = new Answer();
-        System.out.println("Question" + num + "  of 3:\n" +
-                "What is a correct syntax to output \"Hello World\" in Java?\n" +
-                "A. echo(\"Hello World\")\n" +
-                "B. Console.WriteLine(\"Hello World\")\n" +
-                "C. System.out.println(\"Hello World\")\n" +
-                "D. print(\"Hello World\")");
-        System.out.println("Select answer: ");
-
-        answer = scanner.nextLine();
-        if (answer.equals(a.getAnswers().get(0))) {
-            System.out.println("Bravo the answer is good");
-            points++;
-        } else {
-            System.out.println("Sorry but it is not good answer, the correct is:  " + a.getAnswers().get(0));
         }
-
+        return questionNumb;
     }
+
+    public static int numberGenerate() {
+        Random random = new Random();
+        return random.nextInt(5)+1;
     }
 
-
-
-
-
+}

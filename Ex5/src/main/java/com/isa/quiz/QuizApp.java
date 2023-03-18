@@ -18,6 +18,6 @@ public class QuizApp
 
 
 
-        System.out.println( "Hello World!" );
+        System.out.println( "Your quiz score:"+ Question.getPoints() );
     }
 }

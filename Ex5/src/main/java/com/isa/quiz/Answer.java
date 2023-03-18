@@ -1,7 +1,8 @@
 package com.isa.quiz;
 
+import java.util.List;
+
 public class Answer {
 
-    String[] answers = new String[]{"C","A","B","D","A"};
-
+    List<String> answers = List.of("C","A","B","D","A");
 }

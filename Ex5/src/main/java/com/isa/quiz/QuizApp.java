@@ -6,6 +6,6 @@ public class QuizApp {
 
         QuestionPool.printQuestion();
 
-        System.out.println("Your quiz score: " + Question.getPoints());
+        System.out.println("Your quiz score: " + Answer.getPoints());
     }
 }

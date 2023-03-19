@@ -19,9 +19,9 @@ public class Question {
                 "B. Console.WriteLine(\"Hello World\")\n" +
                 "C. System.out.println(\"Hello World\")\n" +
                 "D. print(\"Hello World\")");
-        System.out.println("Select answer: ");
+        System.out.println("Select answer(A,B,C,D): ");
         String answer = scanner.nextLine();
-        if (answer.equals(a.getAnswers().get(0))|| answer.equals(a.getAnswersToUpperCase().get(0))) {
+        if (answer.equals(a.getAnswers().get(0)) || answer.equals(a.getAnswersToUpperCase().get(0))) {
             System.out.println("Bravo the answer is good");
             points++;
         } else {

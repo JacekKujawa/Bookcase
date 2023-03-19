@@ -13,7 +13,7 @@ public class QuizApp {
 //        QuestionPool.question1();
 
 
-        Question.question1(QuestionPool.numberGenerate());
+       // Question.question1();
 
         System.out.println( "Your quiz score: "+ Question.getPoints() );
 

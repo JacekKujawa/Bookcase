@@ -22,13 +22,14 @@ public class Question {
         System.out.println("Select answer(A,B,C,D): ");
         String answer = scanner.nextLine();
         if (answer.equals(a.getAnswers().get(0)) || answer.equals(a.getAnswersToUpperCase().get(0))) {
-            System.out.println("Bravo the answer is good");
+            System.out.println("Bravo! the answer is good");
             points++;
         } else {
             System.out.println("Sorry but it is not good answer, the correct is:  " + a.getAnswersToUpperCase().get(0));
         }
 
     }
+
     public static void question2(int num) {
         Answer a = new Answer();
         System.out.println("Question " + num + "  of 3:\n" +
@@ -40,13 +41,14 @@ public class Question {
         System.out.println("Select answer(A,B,C,D): ");
         String answer = scanner.nextLine();
         if (answer.equals(a.getAnswers().get(1)) || answer.equals(a.getAnswersToUpperCase().get(1))) {
-            System.out.println("Bravo the answer is good");
+            System.out.println("Bravo! the answer is good");
             points++;
         } else {
             System.out.println("Sorry but it is not good answer, the correct is:  " + a.getAnswersToUpperCase().get(1));
         }
 
     }
+
     public static void question3(int num) {
         Answer a = new Answer();
         System.out.println("Question " + num + "  of 3:\n" +
@@ -58,13 +60,14 @@ public class Question {
         System.out.println("Select answer(A,B,C,D): ");
         String answer = scanner.nextLine();
         if (answer.equals(a.getAnswers().get(2)) || answer.equals(a.getAnswersToUpperCase().get(2))) {
-            System.out.println("Bravo the answer is good");
+            System.out.println("Bravo! the answer is good");
             points++;
         } else {
             System.out.println("Sorry but it is not good answer, the correct is:  " + a.getAnswersToUpperCase().get(2));
         }
 
     }
+
     public static void question4(int num) {
         Answer a = new Answer();
         System.out.println("Question " + num + "  of 3:\n" +
@@ -76,13 +79,14 @@ public class Question {
         System.out.println("Select answer(A,B,C,D): ");
         String answer = scanner.nextLine();
         if (answer.equals(a.getAnswers().get(3)) || answer.equals(a.getAnswersToUpperCase().get(3))) {
-            System.out.println("Bravo the answer is good");
+            System.out.println("Bravo! the answer is good");
             points++;
         } else {
             System.out.println("Sorry but it is not good answer, the correct is:  " + a.getAnswersToUpperCase().get(3));
         }
 
     }
+
     public static void question5(int num) {
         Answer a = new Answer();
         System.out.println("Question " + num + "  of 3:\n" +
@@ -94,14 +98,14 @@ public class Question {
         System.out.println("Select answer(A,B,C,D): ");
         String answer = scanner.nextLine();
         if (answer.equals(a.getAnswers().get(4)) || answer.equals(a.getAnswersToUpperCase().get(4))) {
-            System.out.println("Bravo the answer is good");
+            System.out.println("Bravo! the answer is good");
             points++;
         } else {
             System.out.println("Sorry but it is not good answer, the correct is:  " + a.getAnswersToUpperCase().get(4));
         }
 
     }
-    }
+}
 
 
 

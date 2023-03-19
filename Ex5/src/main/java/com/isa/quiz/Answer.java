@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Answer {
 
-    private final List<String> answers = List.of("c","b","a","d","b");
-    private final List<String> answersToUpperCase = List.of("C","B","A","D","B");
+    private final List<String> answers = List.of("c", "b", "a", "d", "b");
+    private final List<String> answersToUpperCase = List.of("C", "B", "A", "D", "B");
 
     public List<String> getAnswers() {
         return answers;

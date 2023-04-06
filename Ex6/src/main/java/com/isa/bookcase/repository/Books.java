@@ -2,10 +2,11 @@ package com.isa.bookcase.repository;
 
 import com.isa.bookcase.domain.Book;
 import com.isa.bookcase.domain.Category;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class Books {
 
     private final List<Book> books;

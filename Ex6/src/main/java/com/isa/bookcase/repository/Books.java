@@ -25,6 +25,15 @@ public class Books {
         Random random = new Random();
         return books.get(random.nextInt(books.size()));
     }
+    public List<Book> searchByTitle(String title) {
+        List<Book> matchingBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                matchingBooks.add(book);
+            }
+        }
+        return matchingBooks;
+    }
 
 
 

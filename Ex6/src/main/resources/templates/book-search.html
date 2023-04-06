@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Search for books</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<h1>Search for books:</h1>
+<form action="/books/book/" method="GET">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title">
+  <button type="submit">Search</button>
+</form>
+<br>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th>Pages</th>
+    <th>For kids</th>
+  </tr>
+  <tbody>
+  <tr th:each="book : ${books}">
+    <td th:text="${book.title}"></td>
+    <td th:text="${book.author}"></td>
+    <td th:text="${book.category}"></td>
+    <td th:text="${book.pages}"></td>
+    <td th:text="${book.forKids}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

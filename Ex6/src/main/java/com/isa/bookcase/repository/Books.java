@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 @Component
 public class Books {
 
@@ -18,6 +20,12 @@ public class Books {
     public List<Book> getBooks() {
         return books;
     }
+
+    public Book getBookForToday() {
+        Random random = new Random();
+        return books.get(random.nextInt(books.size()));
+    }
+
 
 
     private static List<Book> importBooks() {
@@ -37,4 +45,6 @@ public class Books {
 
         return books;
     }
+
+
 }

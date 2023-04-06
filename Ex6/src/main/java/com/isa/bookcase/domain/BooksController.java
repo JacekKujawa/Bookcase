@@ -27,7 +27,12 @@ public class BooksController {
         model.addAttribute("books", booksList);
         return "books";
     }
-
+    @GetMapping("/book-for-today")
+    public String displayBookForDay(Model model) {
+        Book book = books.getBookForToday();
+        model.addAttribute("book", book);
+        return "book";
+    }
 
 }
 

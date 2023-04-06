@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Book of the day</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<h1>Book of the day:</h1>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th>Pages</th>
+    <th>For kids</th>
+  </tr>
+  <tbody>
+  <tr>
+    <td th:text="${book.title}"></td>
+    <td th:text="${book.author}"></td>
+    <td th:text="${book.category}"></td>
+    <td th:text="${book.pages}"></td>
+    <td th:text="${book.forKids}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

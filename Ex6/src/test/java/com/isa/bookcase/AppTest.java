@@ -1,4 +1,4 @@
-package com.isa;
+package com.isa.bookcase;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

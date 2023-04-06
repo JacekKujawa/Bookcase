@@ -1,4 +1,4 @@
-package com.isa;
+package com.isa.bookcase;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

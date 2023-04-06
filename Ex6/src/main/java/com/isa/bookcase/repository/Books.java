@@ -19,6 +19,7 @@ public class Books {
         return books;
     }
 
+
     private static List<Book> importBooks() {
         List<Book> books = new ArrayList<>();
         books.add(new Book("Hanya Yanagihara", "Male zycie", Category.LITERATURA_PIEKNA, 816, false));

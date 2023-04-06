@@ -23,7 +23,7 @@
 </head>
 <body>
 <h1>Search for books:</h1>
-<form action="/books/book/" method="GET">
+<form action="/books/book/search-results" method="GET">
   <label for="title">Title:</label>
   <input type="text" id="title" name="title">
   <button type="submit">Search</button>
@@ -38,7 +38,7 @@
     <th>For kids</th>
   </tr>
   <tbody>
-  <tr th:each="book : ${books}">
+  <tr th:each="book : ${matchingBooks}">
     <td th:text="${book.title}"></td>
     <td th:text="${book.author}"></td>
     <td th:text="${book.category}"></td>

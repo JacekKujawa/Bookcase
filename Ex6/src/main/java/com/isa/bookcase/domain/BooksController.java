@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @Controller
@@ -31,14 +33,22 @@ public class BooksController {
         model.addAttribute("book", book);
         return "book";
     }
-    @GetMapping("/book/{title}")
-    public String searchBooksByTitle(@PathVariable String title, Model model) {
-        List<Book> matchingBooks = books.searchByTitle(title);
-        model.addAttribute("matchingBooks", matchingBooks);
+
+    @GetMapping("/book/search")
+    public String showBookSearchForm() {
         return "book-search";
     }
 
-
+    @GetMapping("/book/search-results")
+    public String searchBooksByTitle(@RequestParam(name = "title", required = false) String title, Model model) {
+        List<Book> matchingBooks = books.searchByTitle(title);
+        if (matchingBooks.isEmpty()) {
+            return "no-results";
+        } else {
+            model.addAttribute("matchingBooks", matchingBooks);
+            return "book-search";
+        }
+    }
 }
 
 

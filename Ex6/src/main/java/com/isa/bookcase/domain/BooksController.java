@@ -41,13 +41,14 @@ public class BooksController {
 
     @GetMapping("/book/search-results")
     public String searchBooksByTitle(@RequestParam(name = "title", required = false) String title, Model model) {
-        List<Book> matchingBooks = books.searchByTitle(title);
-        if (matchingBooks.isEmpty()) {
-            return "no-results";
-        } else {
-            model.addAttribute("matchingBooks", matchingBooks);
+        if (title.isEmpty()) {
             return "book-search";
         }
+        List<Book> matchingBooks = books.searchByTitle(title);
+        if (!matchingBooks.isEmpty()) {
+            model.addAttribute("matchingBooks", matchingBooks);
+        }
+        return "book-search";
     }
 }
 

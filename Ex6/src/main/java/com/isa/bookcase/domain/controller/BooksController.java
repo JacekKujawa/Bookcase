@@ -1,14 +1,15 @@
-package com.isa.bookcase.domain;
+package com.isa.bookcase.domain.controller;
 
+import com.isa.bookcase.domain.Book;
 import com.isa.bookcase.repository.Books;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/books")
@@ -34,14 +35,14 @@ public class BooksController {
         return "book";
     }
 
-    @GetMapping("/book/search")
-    public String showBookSearchForm() {
-        return "book-search";
-    }
+//    @GetMapping("/book/search")
+//    public String showBookSearchForm() {
+//        return "book-search";
+//    }
 
-    @GetMapping("/book/search-results")
+    @GetMapping("/book/search")
     public String searchBooksByTitle(@RequestParam(name = "title", required = false) String title, Model model) {
-        if (title.isEmpty()) {
+        if (Objects.isNull(title)) {
             return "book-search";
         }
         List<Book> matchingBooks = books.searchByTitle(title);

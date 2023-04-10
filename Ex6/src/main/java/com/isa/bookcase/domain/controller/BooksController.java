@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/books")
+@RequestMapping("/")
 public class BooksController {
 
     private final Books books;
@@ -22,6 +22,10 @@ public class BooksController {
     }
 
     @GetMapping
+    public String index() {
+        return "index";
+    }
+    @GetMapping("/books")
     public String displayBooks(Model model) {
         List<Book> booksList = books.getBooks();
         model.addAttribute("books", booksList);
@@ -35,12 +39,7 @@ public class BooksController {
         return "book";
     }
 
-//    @GetMapping("/book/search")
-//    public String showBookSearchForm() {
-//        return "book-search";
-//    }
-
-    @GetMapping("/book/search")
+    @GetMapping("/search")
     public String searchBooksByTitle(@RequestParam(name = "title", required = false) String title, Model model) {
         if (Objects.isNull(title)) {
             return "book-search";
@@ -48,9 +47,13 @@ public class BooksController {
         List<Book> matchingBooks = books.searchByTitle(title);
         if (!matchingBooks.isEmpty()) {
             model.addAttribute("matchingBooks", matchingBooks);
+            return "book-search";
         }
-        return "book-search";
-    }
+        else
+            return "search-no-results";
+        }
+
 }
+
 
 

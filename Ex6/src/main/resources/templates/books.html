@@ -1,54 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>List of books</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .nav {
-            overflow: hidden;
-            background-color: green;
-        }
-
-        .nav a {
-            float: left;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .nav a.active {
-            background-color: #4CAF50;
-            color: white;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="nav">
     <a href="/">Home</a>
-    <a href="/books/book-for-today">Book for today</a>
-    <a href="/books/book/search">Search for books</a>
+    <a href="/book-for-today">Book for today</a>
+    <a href="/search">Search for books</a>
 </div>
 <br>
 <h1>List of books:</h1>

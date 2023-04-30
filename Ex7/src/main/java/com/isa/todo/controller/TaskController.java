@@ -1,44 +1,48 @@
 package com.isa.todo.controller;
 
 import com.isa.todo.model.Category;
+import java.time.LocalDate;
+import javax.validation.Valid;
+
 import com.isa.todo.model.Task;
+import com.isa.todo.repository.TaskRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class TaskController {
 
-    private List<Task> taskList = new ArrayList<>();
+    private TaskRepository taskRepository;
 
-    @GetMapping("/")
-    public String showAllTasks(Model model) {
-        model.addAttribute("tasks", taskList);
-        return "index";
+    public TaskController(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
-    @GetMapping("/add")
-    public String addTaskForm(Model model) {
+    @GetMapping
+    public String getTasks(Model model) {
+        model.addAttribute("tasks", taskRepository.findAll());
+        return "tasks";
+    }
+
+    @GetMapping("/new")
+    public String getNewTask(Model model) {
         model.addAttribute("task", new Task());
-        model.addAttribute("categories", Category.values());
-        return "add-task";
+        return "new-task";
     }
 
-    @PostMapping("/add")
-    public String addTaskSubmit(@Valid @ModelAttribute("task") Task task, BindingResult bindingResult, Model model) {
+    @PostMapping("/new")
+    public String postNewTask(@ModelAttribute("task") @Valid Task task, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", Category.values());
-            return "add-task";
+            return "new-task";
+        } else {
+            taskRepository.save(task);
+            return "redirect:/";
         }
-        taskList.add(task);
-        return "redirect:/";
     }
-
 }

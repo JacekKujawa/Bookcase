@@ -1,50 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Lista ToDo</title>
-    <link rel="stylesheet" type="text/css" th:href="@{css/styles.css}" />
+  <meta charset="UTF-8">
+  <title>Lista zadań</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-6qyUXmT9kpI9MPhStKtxtOT0kGK6y0r6U0J6zXfNlK1uU8j7UksdQRVvoxMfooAo"
+        crossorigin="anonymous">
 </head>
 <body>
-<nav>
-    <a href="#" class="active">Strona główna</a>
-    <a href="#">Blog</a>
-    <a href="#">O mnie</a>
-</nav>
-
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <h1 class="text-center">Lista ToDo</h1>
-        </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <h1 class="text-center">Lista zadań</h1>
     </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <a href="/add" class="btn btn-primary">Dodaj nowe zadanie</a>
-        </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Opis</th>
+          <th>Kategoria</th>
+          <th>Data utworzenia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+          <td th:text="${task.description}"></td>
+          <td th:text="${task.category}"></td>
+          <td th:text="${task.createdDate}"></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Opis</th>
-                    <th>Kategoria</th>
-                    <th>Priorytet</th>
-                    <th>Termin</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="task : ${tasks}">
-                    <td th:text="${task.description}"></td>
-                    <td th:text="${task.category}"></td>
-                    <td th:text="${task.priority}"></td>
-                    <td th:text="${task.dueDate}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 text-center">
+      <a href="/new" class="btn btn-primary">Dodaj nowe zadanie</a>
     </div>
+  </div>
 </div>
 </body>
 </html>

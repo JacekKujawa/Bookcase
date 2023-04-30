@@ -1,81 +1,62 @@
-import java.time.LocalDate;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
+package com.isa.todo.model;
+
+import java.time.LocalDateTime;
 
 public class Task {
+    private String description;
+    private Category category;
+    private int priority;
+    private LocalDateTime dueDate;
 
-    @NotBlank(message = "Opis nie może być pusty")
-    private String opis;
+    public Task() {}
 
-    @NotNull(message = "Kategoria jest wymagana")
-    private String kategoria;
-
-    @NotNull(message = "Priorytet jest wymagany")
-    private Integer priorytet;
-
-    @NotNull(message = "Termin jest wymagany")
-    @FutureOrPresent(message = "Termin nie może być z przeszłości")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate termin;
-
-    public Task() {
+    public Task(String description, Category category, int priority, LocalDateTime dueDate) {
+        this.description = description;
+        this.category = category;
+        this.priority = priority;
+        this.dueDate = dueDate;
     }
 
-    public Task(String opis, String kategoria, Integer priorytet, LocalDate termin) {
-        this.opis = opis;
-        this.kategoria = kategoria;
-        this.priorytet = priorytet;
-        this.termin = termin;
+    public String getDescription() {
+        return description;
     }
 
-    public String getOpis() {
-        return opis;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public Category getCategory() {
+        return category;
     }
 
-    public String getKategoria() {
-        return kategoria;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public void setKategoria(String kategoria) {
-        this.kategoria = kategoria;
+    public int getPriority() {
+        return priority;
     }
 
-    public Integer getPriorytet() {
-        return priorytet;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
-    public void setPriorytet(Integer priorytet) {
-        this.priorytet = priorytet;
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
-    public LocalDate getTermin() {
-        return termin;
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
     }
 
-    public void setTermin(LocalDate termin) {
-        this.termin = termin;
-    }
-
-    // dodajemy metody walidacyjne
-    public boolean isOpisValid() {
-        return opis != null && !opis.trim().isEmpty();
-    }
-
-    public boolean isKategoriaValid() {
-        return kategoria != null;
-    }
-
-    public boolean isPriorytetValid() {
-        return priorytet != null && priorytet >= 1 && priorytet <= 5;
-    }
-
-    public boolean isTerminValid() {
-        return termin != null;
+    public boolean validate() {
+        boolean isValid = true;
+        if (priority < 1 || priority > 5) {
+            isValid = false;
+        }
+        if (dueDate.isBefore(LocalDateTime.now())) {
+            isValid = false;
+        }
+        return isValid;
     }
 }

@@ -1,49 +1,32 @@
 package com.isa.todo.model;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 
 public class Task {
+
+    @NotBlank(message = "Opis nie może być pusty.")
     private String description;
-    private String category;
+
+    @NotNull(message = "Kategoria nie może być pusta.")
+    private Category category;
+
+    @Min(value = 1, message = "Priorytet musi mieć wartość od 1 do 5.")
+    @Max(value = 5, message = "Priorytet musi mieć wartość od 1 do 5.")
     private int priority;
-    private LocalDate deadline;
 
-    public Task(String description, String category, int priority, LocalDate deadline) {
+    @NotNull(message = "Termin nie może być pusty.")
+    @FutureOrPresent(message = "Termin nie może być z przeszłości.")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dueDate;
+
+    public Task(String description, Category category, int priority, LocalDate dueDate) {
         this.description = description;
         this.category = category;
         this.priority = priority;
-        this.deadline = deadline;
+        this.dueDate = dueDate;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
 }
-

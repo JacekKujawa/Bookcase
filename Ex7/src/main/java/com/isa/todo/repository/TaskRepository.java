@@ -10,8 +10,4 @@ public interface TaskRepository {
     void addTask(Task task);
 
     void removeTask(Task task);
-
-
-    Object getAllCategories();
 }
-

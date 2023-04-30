@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Task List</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
-
 <body>
 <h1>Task List</h1>
-<form method="post" action="/new">
-    <button type="submit">Add New Task</button>
-</form>
-
 <table>
     <thead>
     <tr>
-        <th>Description</th>
         <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
         <th>Priority</th>
-        <th>Due Date</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.description}"></td>
-        <td th:text="${task.category}"></td>
-        <td th:text="${task.priority}"></td>
-        <td th:text="${task.dueDate}"></td>
-    </tr>
+    <th:block th:each="task : ${tasks}">
+        <tr>
+            <td th:text="${task.getCategory()}"></td>
+            <td th:text="${task.getDescription()}"></td>
+            <td th:text="${task.getDueDate()}"></td>
+            <td th:text="${task.getPriority()}"></td>
+        </tr>
+    </th:block>
     </tbody>
 </table>
+<a href="/new">Add new task</a>
 </body>
-
 </html>

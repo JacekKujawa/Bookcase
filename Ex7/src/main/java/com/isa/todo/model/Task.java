@@ -20,6 +20,7 @@ public class Task {
     @FutureOrPresent(message = "Termin nie może być z przeszłości.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
+    public Task() {}
 
     public Task(String description, Category category, int priority, LocalDate dueDate) {
         this.description = description;

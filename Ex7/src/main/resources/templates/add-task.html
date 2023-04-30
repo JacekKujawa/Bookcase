@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Lista ToDo - dodaj zadanie</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<h1>Dodaj nowe zadanie</h1>
+<form method="post" th:action="@{/tasks}">
+  <label for="description">Opis: </label><br/>
+  <input type="text" id="description" name="description" th:field="*{description}" required/><br/><br/>
+
+  <label for="category">Kategoria: </label><br/>
+  <select id="category" name="category" th:field="*{category}" required>
+    <option value="">--Wybierz--</option>
+    <option value="WORK">Praca</option>
+    <option value="HOME">Dom</option>
+  </select><br/><br/>
+
+  <label for="priority">Priorytet: </label><br/>
+  <input type="number" id="priority" name="priority" min="1" max="5" th:field="*{priority}" required/><br/><br/>
+
+  <label for="dueDate">Termin: </label><br/>
+  <input type="date" id="dueDate" name="dueDate" th:field="*{dueDate}" required/><br/><br/>
+
+  <input type="submit" value="Dodaj"/>
+</form>
+</body>
+</html>

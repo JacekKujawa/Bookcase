@@ -36,15 +36,12 @@
       <p th:if="${#fields.hasErrors('dueDate')}" class="error-message" th:errors="*{dueDate}"></p>
     </div>
 
-    <div class="form-field">
-      <label for="priority">Priority:</label>
-      <select id="priority" name="priority" th:field="*{priority}">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+    <div class="form-group">
+      <label for="priority">Priority(1 - 5):</label>
+      <input type="text" class="form-control" id="priority" name="priority" required
+             pattern="[1-5]"
+             title="Priority must be a number between 1 and 5"
+             min="1" max="5">
     </div>
 
     <div class="form-field">

@@ -12,7 +12,7 @@ public class Task {
     @NotEmpty(message = "Description cannot be empty")
     private String description;
     private Category category;
-    private int priority;
+    private String priority;
     @NotNull(message = "Date cannot be empty")
     @Future(message = "Date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -23,7 +23,7 @@ public class Task {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Task(String description, Category category, int priority, LocalDate dueDate) {
+    public Task(String description, Category category, String priority, LocalDate dueDate) {
         this.id = UUID.randomUUID().toString();
         this.description = description;
         this.category = category;
@@ -47,11 +47,11 @@ public class Task {
         this.category = category;
     }
 
-    public int getPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 

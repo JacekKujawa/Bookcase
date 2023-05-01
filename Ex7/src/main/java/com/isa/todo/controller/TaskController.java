@@ -52,11 +52,12 @@ public class TaskController {
 
 
     @GetMapping("/remove/{id}")
-    public String deleteTask(@PathVariable("id") String id) {
+    public String deleteTask(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
         Task task = taskService.getTaskById(id);
         if (task != null) {
             taskService.removeTask(id);
         }
+        redirectAttributes.addFlashAttribute("successMessage", "Task remove successfully!");
         return "redirect:/";
     }
 }

@@ -11,16 +11,12 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Task {
-    @JsonProperty("id")
-    private String id;
     @NotEmpty(message = "Description cannot be empty")
     private String description;
     private Category category;
     private int priority;
-    private boolean completed;
-    @NotNull(message = "Data cannot be empty")
+    @NotNull(message = "Date cannot be empty")
     @Future(message = "Due date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
@@ -65,14 +61,6 @@ public class Task {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
     }
 
     public String getId() {

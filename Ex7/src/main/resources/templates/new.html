@@ -10,6 +10,10 @@
   <h1>Add New Task</h1>
 </div>
 <div class="form-container">
+  <div th:if="${successMessage}" class="alert alert-success" role="alert">
+    <span th:text="${successMessage}"></span>
+  </div>
+
   <form method="post" th:object="${newTask}">
     <div class="form-field">
       <label>Category:</label>

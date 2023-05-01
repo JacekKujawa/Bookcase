@@ -8,6 +8,10 @@
 <body>
 <h1>Task List</h1>
 <table>
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+
     <thead>
     <tr>
         <th>Category</th>

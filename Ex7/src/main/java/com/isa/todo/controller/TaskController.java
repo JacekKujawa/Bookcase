@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,15 +36,17 @@ public class TaskController {
     @GetMapping("/new")
     public String showNewTaskForm(Model model) {
         model.addAttribute("newTask", new Task());
+        model.addAttribute("successMessage", "");
         return "new";
     }
 
     @PostMapping("/new")
-    public String addTask(@ModelAttribute("newTask") @Valid Task task, BindingResult result) {
+    public String addTask(@ModelAttribute("newTask") @Valid Task task, BindingResult result, RedirectAttributes redirectAttributes ) {
         if (result.hasErrors()) {
             return "new";
         }
         taskService.addTask(task);
+        redirectAttributes.addFlashAttribute("successMessage", "Task added successfully!");
         return "redirect:/";
     }
 

@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     @PostMapping("/new")
-    public String addTask(@ModelAttribute("newTask") @Valid Task task, BindingResult result, RedirectAttributes redirectAttributes ) {
+    public String addTask(@ModelAttribute("newTask") @Valid Task task, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "new";
         }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ public class Task {
     private String description;
     private Category category;
     private int priority;
+    @NotNull(message = "Date cannot be empty")
     @Future(message = "Due date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;

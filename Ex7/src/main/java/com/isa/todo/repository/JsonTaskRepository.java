@@ -1,10 +1,7 @@
 package com.isa.todo.repository;
-
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isa.todo.model.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -14,42 +11,49 @@ import java.util.List;
 @Repository
 public class JsonTaskRepository implements TaskRepository {
 
-    private final String filePath;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String FILE_NAME = "tasks.json";
+    private final ObjectMapper objectMapper;
+    private List<Task> tasks;
 
-    public JsonTaskRepository() {
-        this.filePath = "tasks.json";
+    public JsonTaskRepository(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+        this.tasks = loadTasksFromFile();
     }
 
     @Override
     public List<Task> getAllTasks() {
-        try {
-            return objectMapper.readValue(new File(filePath), new TypeReference<List<Task>>() {});
-        } catch (IOException e) {
-            return new ArrayList<>();
-        }
+        return new ArrayList<>(tasks);
     }
 
     @Override
     public void addTask(Task task) {
-        try {
-            List<Task> tasks = getAllTasks();
-            tasks.add(task);
-            System.out.println("Adding task..");
-            objectMapper.writeValue(new File(filePath), tasks);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        tasks.add(task);
+        saveTasksToFile();
     }
 
     @Override
     public void removeTask(Task task) {
+        tasks.remove(task);
+        saveTasksToFile();
+    }
+
+    private void saveTasksToFile() {
         try {
-            List<Task> tasks = getAllTasks();
-            tasks.remove(task);
-            objectMapper.writeValue(new File(filePath), tasks);
+            objectMapper.writeValue(new File(FILE_NAME), tasks);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to save tasks to file", e);
         }
+    }
+
+    private List<Task> loadTasksFromFile() {
+        try {
+            File file = new File(FILE_NAME);
+            if (file.exists()) {
+                return objectMapper.readValue(file, new TypeReference<List<Task>>() {});
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load tasks from file", e);
+        }
+        return new ArrayList<>();
     }
 }

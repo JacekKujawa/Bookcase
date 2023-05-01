@@ -8,7 +8,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-@Component
+
 public class Task {
     @NotEmpty(message = "Description cannot be empty")
     private String description;

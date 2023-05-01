@@ -11,26 +11,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class TaskController {
 
-    private final TaskRepository taskRepository;
-
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    private List<Task> tasks = new ArrayList<>();
 
     @GetMapping("/")
     public String home(Model model) {
-        List<Task> tasks = taskRepository.getAllTasks();
         model.addAttribute("tasks", tasks);
+        model.addAttribute("newTask", new Task());
         return "index";
     }
 
     @GetMapping("/new")
-    public String newTask(Model model) {
+    public String showNewTaskForm(Model model) {
         model.addAttribute("newTask", new Task());
         return "new";
     }
@@ -40,9 +37,7 @@ public class TaskController {
         if (result.hasErrors()) {
             return "new";
         }
-        System.out.println("Adding task..");
-        taskRepository.addTask(new Task(task.getDescription(),task.getCategory(), task.getPriority(),task.getDueDate()));
+        tasks.add(task);
         return "redirect:/";
     }
-
 }

@@ -1,19 +1,26 @@
 package com.isa.todo.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
+
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+@Component
 public class Task {
+    @NotEmpty(message = "Description cannot be empty")
     private String description;
     private Category category;
     private int priority;
+    @Future(message = "Due date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     public Task() {}
 
-    public Task(String description, Category category, int priority, LocalDateTime dueDate) {
+    public Task(String description, Category category, int priority, LocalDate dueDate) {
         this.description = description;
         this.category = category;
         this.priority = priority;
@@ -44,11 +51,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public LocalDateTime getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -57,7 +64,7 @@ public class Task {
         if (priority < 1 || priority > 5) {
             isValid = false;
         }
-        if (dueDate.isBefore(LocalDateTime.now())) {
+        if (dueDate.isBefore(LocalDate.now())) {
             isValid = false;
         }
         return isValid;

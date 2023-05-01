@@ -3,6 +3,8 @@ package com.isa.todo.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isa.todo.model.Task;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -14,12 +16,14 @@ import java.util.Optional;
 @Repository
 public class JsonTaskRepository implements TaskRepository {
 
-    private static final String FILE_NAME = "tasks.json";
     private final ObjectMapper objectMapper;
     private final List<Task> tasks;
     TaskRepository taskRepository;
 
-    public JsonTaskRepository(ObjectMapper objectMapper) {
+    Resource resource = new ClassPathResource("tasks.json");
+    File FILE_NAME = resource.getFile();
+
+    public JsonTaskRepository(ObjectMapper objectMapper) throws IOException {
         this.objectMapper = objectMapper;
         this.tasks = loadTasksFromFile();
         this.taskRepository = this;
@@ -53,7 +57,7 @@ public class JsonTaskRepository implements TaskRepository {
 
     private void saveTasksToFile(List<Task> tasks) {
         try {
-            objectMapper.writeValue(new File(FILE_NAME), this.tasks);
+            objectMapper.writeValue(new File(FILE_NAME.toURI()), this.tasks);
         } catch (IOException e) {
             throw new RuntimeException("Failed to save tasks to file", e);
         }
@@ -61,7 +65,7 @@ public class JsonTaskRepository implements TaskRepository {
 
     private List<Task> loadTasksFromFile() {
         try {
-            File file = new File(FILE_NAME);
+            File file = new File(FILE_NAME.toURI());
             if (file.exists()) {
                 return objectMapper.readValue(file, new TypeReference<List<Task>>() {
                 });

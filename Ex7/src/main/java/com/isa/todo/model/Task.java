@@ -1,8 +1,5 @@
 package com.isa.todo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
@@ -17,11 +14,14 @@ public class Task {
     private Category category;
     private int priority;
     @NotNull(message = "Date cannot be empty")
-    @Future(message = "Due date must be in the future")
+    @Future(message = "Date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
+    private final String id;
 
-    public Task() {this.id = UUID.randomUUID().toString();}
+    public Task() {
+        this.id = UUID.randomUUID().toString();
+    }
 
     public Task(String description, Category category, int priority, LocalDate dueDate) {
         this.id = UUID.randomUUID().toString();

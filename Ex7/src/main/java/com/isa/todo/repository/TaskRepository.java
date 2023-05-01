@@ -13,6 +13,4 @@ public interface TaskRepository {
 
     Task getTaskById(String id);
 
-    void updateTask(Task task);
-
 }

@@ -1,4 +1,5 @@
 package com.isa.todo.repository;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isa.todo.model.Task;
@@ -15,12 +16,13 @@ public class JsonTaskRepository implements TaskRepository {
 
     private static final String FILE_NAME = "tasks.json";
     private final ObjectMapper objectMapper;
-    private List<Task> tasks;
+    private final List<Task> tasks;
     TaskRepository taskRepository;
 
     public JsonTaskRepository(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
         this.tasks = loadTasksFromFile();
+        this.taskRepository = this;
     }
 
     @Override
@@ -39,24 +41,11 @@ public class JsonTaskRepository implements TaskRepository {
         tasks.remove(task);
         saveTasksToFile(tasks);
     }
-    @Override
-    public void updateTask(Task updatedTask) {
-        List<Task> tasks = getAllTasks();
-
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId().equals(updatedTask.getId())) {
-                tasks.set(i, updatedTask);
-                saveTasksToFile(tasks);
-                return;
-            }
-        }
-    }
 
 
     @Override
     public Task getTaskById(String id) {
-
-        Optional<Task> taskOptional = taskRepository.getAllTasks().stream()
+        Optional<Task> taskOptional = this.taskRepository.getAllTasks().stream()
                 .filter(task -> task.getId().equals(id))
                 .findFirst();
         return taskOptional.orElse(null);
@@ -74,7 +63,8 @@ public class JsonTaskRepository implements TaskRepository {
         try {
             File file = new File(FILE_NAME);
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<List<Task>>() {});
+                return objectMapper.readValue(file, new TypeReference<List<Task>>() {
+                });
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to load tasks from file", e);

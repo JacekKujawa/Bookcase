@@ -4,12 +4,11 @@ import com.isa.todo.model.Task;
 import com.isa.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class TaskService {
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     @Autowired
     public TaskService(TaskRepository taskRepository) {
@@ -33,12 +32,6 @@ public class TaskService {
         if (task != null) {
             taskRepository.removeTask(task);
         }
-    }
-
-    public void markTaskAsCompleted(String id, boolean completed) {
-        Task task = taskRepository.getTaskById(id);
-        task.setCompleted(completed);
-        taskRepository.updateTask(task);
     }
 
 }

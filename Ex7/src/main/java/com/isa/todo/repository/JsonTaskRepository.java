@@ -8,12 +8,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class JsonTaskRepository implements TaskRepository {
 
     private static final String FILE_NAME = "tasks.json";
     private final ObjectMapper objectMapper;
     private List<Task> tasks;
+    TaskRepository taskRepository;
 
     public JsonTaskRepository(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -28,18 +31,40 @@ public class JsonTaskRepository implements TaskRepository {
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        saveTasksToFile();
+        saveTasksToFile(tasks);
     }
 
     @Override
     public void removeTask(Task task) {
         tasks.remove(task);
-        saveTasksToFile();
+        saveTasksToFile(tasks);
+    }
+    @Override
+    public void updateTask(Task updatedTask) {
+        List<Task> tasks = getAllTasks();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId().equals(updatedTask.getId())) {
+                tasks.set(i, updatedTask);
+                saveTasksToFile(tasks);
+                return;
+            }
+        }
     }
 
-    private void saveTasksToFile() {
+
+    @Override
+    public Task getTaskById(String id) {
+
+        Optional<Task> taskOptional = taskRepository.getAllTasks().stream()
+                .filter(task -> task.getId().equals(id))
+                .findFirst();
+        return taskOptional.orElse(null);
+    }
+
+    private void saveTasksToFile(List<Task> tasks) {
         try {
-            objectMapper.writeValue(new File(FILE_NAME), tasks);
+            objectMapper.writeValue(new File(FILE_NAME), this.tasks);
         } catch (IOException e) {
             throw new RuntimeException("Failed to save tasks to file", e);
         }

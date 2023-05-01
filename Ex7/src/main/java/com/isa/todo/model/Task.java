@@ -1,26 +1,34 @@
 package com.isa.todo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
-
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.UUID;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Task {
+    @JsonProperty("id")
+    private String id;
     @NotEmpty(message = "Description cannot be empty")
     private String description;
     private Category category;
     private int priority;
+    private boolean completed;
+    @NotNull(message = "Data cannot be empty")
     @Future(message = "Due date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
-    public Task() {}
+    public Task() {this.id = UUID.randomUUID().toString();}
 
     public Task(String description, Category category, int priority, LocalDate dueDate) {
+        this.id = UUID.randomUUID().toString();
         this.description = description;
         this.category = category;
         this.priority = priority;
@@ -59,14 +67,16 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public boolean validate() {
-        boolean isValid = true;
-        if (priority < 1 || priority > 5) {
-            isValid = false;
-        }
-        if (dueDate.isBefore(LocalDate.now())) {
-            isValid = false;
-        }
-        return isValid;
+    public boolean isCompleted() {
+        return completed;
     }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public String getId() {
+        return id;
+    }
+
 }

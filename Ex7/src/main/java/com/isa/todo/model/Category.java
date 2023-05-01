@@ -1,8 +1,16 @@
 package com.isa.todo.model;
 
-import org.springframework.stereotype.Component;
-
-
 public enum Category {
-    WORK, HOME
+    WORK("Praca"),
+    HOME("Dom");
+
+    private final String displayName;
+
+    Category(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

@@ -1,27 +1,25 @@
 package com.isa.todo.controller;
 
-import com.isa.todo.model.Category;
 import com.isa.todo.model.Task;
 import com.isa.todo.repository.JsonTaskRepository;
-import com.isa.todo.repository.TaskRepository;
+import com.isa.todo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 @Controller
 public class TaskController {
+    private final TaskService taskService;
 
     private final JsonTaskRepository taskRepository;
 
     @Autowired
-    public TaskController(JsonTaskRepository taskRepository) {
+    public TaskController(TaskService taskService, JsonTaskRepository taskRepository) {
+        this.taskService = taskService;
         this.taskRepository = taskRepository;
     }
 
@@ -47,13 +45,20 @@ public class TaskController {
         taskRepository.addTask(task);
         return "redirect:/";
     }
-//
-//    @GetMapping("/delete/{id}")
-//    public String deleteTask(@PathVariable("id") Long id) {
-//        Task task = taskRepository.getTaskById(id);
-//        if (task != null) {
-//            taskRepository.removeTask(task);
-//        }
-//        return "redirect:/";
-//    }
+    @PostMapping("/{id}/completed")
+    public String markTaskAsCompleted(@PathVariable String id, @RequestParam boolean completed) {
+
+        taskService.markTaskAsCompleted(id, completed);
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/remove/{id}")
+    public String deleteTask(@PathVariable("id") String id) {
+        Task task = taskRepository.getTaskById(id);
+        if (task != null) {
+            taskRepository.removeTask(task);
+        }
+        return "redirect:/";
+    }
 }

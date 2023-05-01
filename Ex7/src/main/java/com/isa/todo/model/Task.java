@@ -20,7 +20,8 @@ public class Task {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
-    public Task() {}
+    public Task() {
+    }
 
     public Task(String description, Category category, int priority, LocalDate dueDate) {
         this.description = description;
@@ -59,16 +60,5 @@ public class Task {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public boolean validate() {
-        boolean isValid = true;
-        if (priority < 1 || priority > 5) {
-            isValid = false;
-        }
-        if (dueDate.isBefore(LocalDate.now())) {
-            isValid = false;
-        }
-        return isValid;
     }
 }

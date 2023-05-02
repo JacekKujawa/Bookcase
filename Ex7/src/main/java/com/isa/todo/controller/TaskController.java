@@ -29,14 +29,12 @@ public class TaskController {
     public String home(Model model) {
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
-        model.addAttribute("newTask", new Task());
         return "index";
     }
 
     @GetMapping("/new")
     public String showNewTaskForm(Model model) {
         model.addAttribute("newTask", new Task());
-        model.addAttribute("successMessage", "");
         return "new";
     }
 
@@ -46,10 +44,9 @@ public class TaskController {
             return "new";
         }
         taskService.addTask(task);
-        redirectAttributes.addFlashAttribute("successMessage", "Task added successfully!");
+        redirectAttributes.addAttribute("successMessage", "Task added successfully!");
         return "redirect:/";
     }
-
 
     @GetMapping("/remove/{id}")
     public String deleteTask(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
@@ -57,7 +54,9 @@ public class TaskController {
         if (task != null) {
             taskService.removeTask(id);
         }
-        redirectAttributes.addFlashAttribute("successMessage", "Task remove successfully!");
+
+        redirectAttributes.addAttribute("successMessage", "Task remove successfully!");
         return "redirect:/";
     }
+
 }

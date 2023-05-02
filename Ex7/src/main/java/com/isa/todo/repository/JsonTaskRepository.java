@@ -37,13 +37,13 @@ public class JsonTaskRepository implements TaskRepository {
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        saveTasksToFile(tasks);
+        saveTasksToFile();
     }
 
     @Override
     public void removeTask(Task task) {
         tasks.remove(task);
-        saveTasksToFile(tasks);
+        saveTasksToFile();
     }
 
 
@@ -55,7 +55,7 @@ public class JsonTaskRepository implements TaskRepository {
         return taskOptional.orElse(null);
     }
 
-    private void saveTasksToFile(List<Task> tasks) {
+    private void saveTasksToFile() {
         try {
             objectMapper.writeValue(new File(FILE_NAME.toURI()), this.tasks);
         } catch (IOException e) {
@@ -67,7 +67,7 @@ public class JsonTaskRepository implements TaskRepository {
         try {
             File file = new File(FILE_NAME.toURI());
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<List<Task>>() {
+                return objectMapper.readValue(file, new TypeReference<>() {
                 });
             }
         } catch (IOException e) {

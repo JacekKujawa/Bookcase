@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Task {
+    private final String id;
     @NotEmpty(message = "Description cannot be empty")
     private String description;
     private Category category;
@@ -17,7 +18,6 @@ public class Task {
     @Future(message = "Date must be in the future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
-    private final String id;
 
     public Task() {
         this.id = UUID.randomUUID().toString();

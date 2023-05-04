@@ -75,7 +75,7 @@ h1 {
 
 .form-container {
     margin: 0 auto;
-    width: 25%;
+    width: 50%;
     background-color: #f5f5f5;
     border: 1px solid #e0e0e0;
     padding: 20px;
@@ -157,7 +157,7 @@ label {
 input,
 select {
     display: block;
-    width: 100%;
+    width: 45%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -166,7 +166,7 @@ select {
 
 button[type="submit"] {
     display: block;
-    width: 100%;
+    width: 25%;
     padding: 10px;
     background-color: #0077cc;
     color: #fff;
@@ -199,7 +199,6 @@ button[type="submit"]:hover {
 
 .success-message {
     background-color: #d4edda;
-    border-color: #c3e6cb;
     color: #155724;
     padding: .75rem 1.25rem;
     margin-bottom: 1rem;

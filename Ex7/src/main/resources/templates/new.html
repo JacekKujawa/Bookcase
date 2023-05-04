@@ -19,17 +19,16 @@
                     th:text="${category}"></option>
         </select>
     </div>
-
     <div class="form-field">
         <label for="description">Description:</label>
-        <textarea id="description" name="description" th:field="*{description}" rows="5"></textarea>
-        <p th:if="${#fields.hasErrors('description')}" class="error-message" th:errors="*{description}"></p>
+        <textarea id="description" name="description" th:field="*{description}" rows="8" style="width:50%;"></textarea>
+        <p th:if="${#fields.hasErrors('description')}" class="error-message error" th:errors="*{description}"></p>
     </div>
 
     <div class="form-field">
         <label for="dueDate">Due Date:</label>
         <input type="date" id="dueDate" name="dueDate" th:field="*{dueDate}">
-        <p th:if="${#fields.hasErrors('dueDate')}" class="error-message" th:errors="*{dueDate}"></p>
+        <p th:if="${#fields.hasErrors('dueDate')}" class="error-message error" th:errors="*{dueDate}"></p>
     </div>
 
     <div class="form-field">
@@ -38,6 +37,7 @@
                pattern="[1-5]"
                title="Priority must be a number between 1 and 5"
                min="1" max="5">
+        <p th:if="${#fields.hasErrors('priority')}" class="error-message error" th:errors="*{priority}"></p>
     </div>
 
     <div class="form-field">
@@ -47,6 +47,5 @@
     <button><a href="/" class="button">Task List</a></button>
 
 </form>
-</div>
 </body>
 </html>

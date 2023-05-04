@@ -83,7 +83,7 @@ h1 {
 }
 
 .form-field {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .form-field label {
@@ -142,8 +142,8 @@ body {
 
 form {
     margin: auto;
-    width: 50%;
-    padding: 100px;
+    width: 25%;
+    padding: 50px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #fff;
@@ -157,7 +157,7 @@ label {
 input,
 select {
     display: block;
-    width: 45%;
+    width: 25%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;

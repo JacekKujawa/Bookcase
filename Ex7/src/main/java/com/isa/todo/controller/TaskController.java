@@ -79,5 +79,15 @@ public class TaskController {
         return "index";
     }
 
+    @GetMapping("/priority-desc")
+    public String sortTasksByPriorityDescending(Model model) {
+        List<Task> priorityTasks = taskService.sortTasksByPriorityDescending();
+        model.addAttribute("tasks", priorityTasks);
+        model.addAttribute("pageTitle", "Priority descending tasks");
+        if (priorityTasks.isEmpty()) {
+            model.addAttribute("Message", "No tasks found.");
+        }
+        return "index";
+    }
 
 }

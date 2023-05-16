@@ -58,5 +58,12 @@ public class TaskController {
         redirectAttributes.addAttribute("successMessage", "Task remove successfully!");
         return "redirect:/";
     }
+    @GetMapping("/priority1")
+    public String getTasksWithPriority1(Model model) {
+        List<Task> priority1Tasks = taskService.findTasksWithPriority1();
+        model.addAttribute("tasks", priority1Tasks);
+        return "index";
+    }
+
 
 }

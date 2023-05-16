@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -26,6 +28,12 @@ public class TaskService {
 
     public Task getTaskById(String id) {
         return taskRepository.getTaskById(id);
+    }
+
+    public List<Task> findTasksWithPriority1() {
+        return taskRepository.getAllTasks().stream()
+                .filter(task -> Objects.equals(task.getPriority(), "1"))
+                .collect(Collectors.toList());
     }
 
     public void removeTask(String id) {

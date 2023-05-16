@@ -29,6 +29,7 @@ public class TaskController {
     public String home(Model model) {
         List<Task> tasks = taskService.getAllTasks();
         model.addAttribute("tasks", tasks);
+        model.addAttribute("pageTitle", "Tasks list");
         return "index";
     }
 
@@ -57,6 +58,7 @@ public class TaskController {
         redirectAttributes.addAttribute("successMessage", "Task remove successfully!");
         return "redirect:/";
     }
+
     @GetMapping("/priority1")
     public String getTasksWithPriority1(Model model) {
         List<Task> priority1Tasks = taskService.findTasksWithPriority1();
@@ -90,4 +92,15 @@ public class TaskController {
         return "index";
     }
 
+
+    @GetMapping("/sortedset")
+    public String sortTasksByDate(Model model) {
+        List<Task> sortTasks = taskService.sortTasksByDate();
+        model.addAttribute("tasks", sortTasks);
+        model.addAttribute("pageTitle", "Sorted tasks by date");
+        if (sortTasks.isEmpty()) {
+            model.addAttribute("Message", "No tasks found.");
+        }
+        return "index";
+    }
 }

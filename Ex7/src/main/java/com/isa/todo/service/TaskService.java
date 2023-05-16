@@ -51,6 +51,12 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
+    public List<Task> sortTasksByDate() {
+        return taskRepository.getAllTasks().stream()
+                .sorted(Comparator.comparing(Task::getDueDate))
+                .collect(Collectors.toList());
+    }
+
     public void removeTask(String id) {
         Task task = taskRepository.getTaskById(id);
         if (task != null) {

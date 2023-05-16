@@ -62,6 +62,10 @@ public class TaskController {
     public String getTasksWithPriority1(Model model) {
         List<Task> priority1Tasks = taskService.findTasksWithPriority1();
         model.addAttribute("tasks", priority1Tasks);
+        model.addAttribute("pageTitle", "Priority 1 Tasks");
+        if (priority1Tasks.isEmpty()) {
+            model.addAttribute("Message", "No Priority 1 tasks found.");
+        }
         return "index";
     }
 

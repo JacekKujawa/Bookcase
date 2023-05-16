@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task List</title>
+    <title th:text="${pageTitle}">Task List</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<h1>Task List</h1>
+<h1 th:text="${pageTitle}">Task List</h1>
 <table>
+    <div style="text-align: center; color: red" th:if="${Message != null}" class="alert alert-info" th:text="${Message}"></div>
     <div th:if="${param.successMessage != null}" class="alert alert-success" th:text="${param.successMessage}"></div>
     <thead>
     <tr>

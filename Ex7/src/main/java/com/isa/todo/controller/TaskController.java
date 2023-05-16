@@ -1,21 +1,20 @@
 package com.isa.todo.controller;
 
+import com.isa.todo.model.Category;
 import com.isa.todo.model.Task;
 import com.isa.todo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/")
 public class TaskController {
     private final TaskService taskService;
 
@@ -99,6 +98,16 @@ public class TaskController {
         model.addAttribute("tasks", sortTasks);
         model.addAttribute("pageTitle", "Sorted tasks by date");
         if (sortTasks.isEmpty()) {
+            model.addAttribute("Message", "No tasks found.");
+        }
+        return "index";
+    }
+    @GetMapping("/category")
+    public String getTasksByCategory(Model model, @RequestParam("category") Category category) {
+        List<Task> taskByCategory = taskService.findTasksByCategory(category);
+        model.addAttribute("tasks", taskByCategory);
+        model.addAttribute("pageTitle", "Tasks by category");
+        if (taskByCategory.isEmpty()) {
             model.addAttribute("Message", "No tasks found.");
         }
         return "index";

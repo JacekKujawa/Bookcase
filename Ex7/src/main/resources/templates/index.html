@@ -7,9 +7,9 @@
 </head>
 <body>
 <h1 th:text="${pageTitle}">Task List</h1>
+<div style="text-align: center; color: red" th:if="${Message != null}" class="alert alert-info" th:text="${Message}"></div>
+<div th:if="${param.successMessage != null}" class="alert alert-success" th:text="${param.successMessage}"></div>
 <table>
-    <div style="text-align: center; color: red" th:if="${Message != null}" class="alert alert-info" th:text="${Message}"></div>
-    <div th:if="${param.successMessage != null}" class="alert alert-success" th:text="${param.successMessage}"></div>
     <thead>
     <tr>
         <th>Category</th>
@@ -26,13 +26,21 @@
             <td th:text="${task.getDescription()}"></td>
             <td th:text="${task.getDueDate()}"></td>
             <td th:text="${task.getPriority()}"></td>
-
             <td><a th:href="@{/remove/{id}(id=${task.id})}" class="button">Remove</a></td>
-
         </tr>
     </th:block>
     </tbody>
 </table>
+<h1>Select Category</h1>
+<form action="/category" method="get">
+    <label for="category">Choose a category:</label>
+    <select id="category" name="category">
+        <option value="WORK">Work</option>
+        <option value="HOME">Home</option>
+        <option value="OTHER">Other</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
 <p style="text-align: center;"><a href="/new" class="button">Add new task</a></p>
 </body>
 </html>

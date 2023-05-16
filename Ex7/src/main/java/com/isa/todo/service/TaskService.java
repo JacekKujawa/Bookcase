@@ -1,5 +1,6 @@
 package com.isa.todo.service;
 
+import com.isa.todo.model.Category;
 import com.isa.todo.model.Task;
 import com.isa.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +65,9 @@ public class TaskService {
         }
     }
 
+    public List<Task> findTasksByCategory(Category category) {
+        return taskRepository.getAllTasks().stream()
+                .filter(task -> task.getCategory() == category)
+                .collect(Collectors.toList());
+    }
 }

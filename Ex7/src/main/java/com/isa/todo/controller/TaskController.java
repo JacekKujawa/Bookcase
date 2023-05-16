@@ -54,7 +54,6 @@ public class TaskController {
         if (task != null) {
             taskService.removeTask(id);
         }
-
         redirectAttributes.addAttribute("successMessage", "Task remove successfully!");
         return "redirect:/";
     }
@@ -65,6 +64,17 @@ public class TaskController {
         model.addAttribute("pageTitle", "Priority 1 Tasks");
         if (priority1Tasks.isEmpty()) {
             model.addAttribute("Message", "No Priority 1 tasks found.");
+        }
+        return "index";
+    }
+
+    @GetMapping("/nextDay")
+    public String getNextDayTasks(Model model) {
+        List<Task> nextDayTasks = taskService.findTasksForNextDay();
+        model.addAttribute("tasks", nextDayTasks);
+        model.addAttribute("pageTitle", "Next Day Tasks");
+        if (nextDayTasks.isEmpty()) {
+            model.addAttribute("Message", "No next day tasks found.");
         }
         return "index";
     }

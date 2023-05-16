@@ -5,6 +5,7 @@ import com.isa.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -33,6 +34,13 @@ public class TaskService {
     public List<Task> findTasksWithPriority1() {
         return taskRepository.getAllTasks().stream()
                 .filter(task -> Objects.equals(task.getPriority(), "1"))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> findTasksForNextDay() {
+        LocalDate nextDay = LocalDate.now().plusDays(1);
+        return taskRepository.getAllTasks().stream()
+                .filter(task -> task.getDueDate().equals(nextDay))
                 .collect(Collectors.toList());
     }
 

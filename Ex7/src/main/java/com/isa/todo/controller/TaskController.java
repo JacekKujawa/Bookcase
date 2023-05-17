@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -102,6 +105,7 @@ public class TaskController {
         }
         return "index";
     }
+
     @GetMapping("/category")
     public String getTasksByCategory(Model model, @RequestParam("category") Category category) {
         List<Task> taskByCategory = taskService.findTasksByCategory(category);
@@ -123,4 +127,20 @@ public class TaskController {
         }
         return "index";
     }
+
+    @GetMapping("/most-urgent")
+    public String getMostUrgentTask(Model model) {
+        Optional<Task> taskOptional = taskService.findMostUrgentTask();
+        if (taskOptional.isPresent()) {
+            model.addAttribute("tasks", Collections.singletonList(taskOptional.get()));
+        } else {
+            model.addAttribute("tasks", new ArrayList<>());
+        }
+        model.addAttribute("pageTitle", "Most urgent task");
+        if (taskOptional.isEmpty()) {
+            model.addAttribute("Message", "No tasks found.");
+        }
+        return "index";
+    }
+
 }

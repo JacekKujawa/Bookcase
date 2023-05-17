@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,5 +76,10 @@ public class TaskService {
         return taskRepository.getAllTasks().stream()
                 .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<Task> findMostUrgentTask() {
+        return taskRepository.getAllTasks().stream()
+                .min(Comparator.comparing(Task::getDueDate).thenComparingInt(Task::getPriority));
     }
 }

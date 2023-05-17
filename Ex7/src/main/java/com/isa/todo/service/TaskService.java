@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,5 +78,9 @@ public class TaskService {
     public Optional<Task> findMostUrgentTask() {
         return taskRepository.getAllTasks().stream()
                 .min(Comparator.comparing(Task::getDueDate).thenComparingInt(Task::getPriority));
+    }
+    public Map<Category, List<Task>> divideTasksByCategory() {
+        return taskRepository.getAllTasks().stream()
+                .collect(Collectors.groupingBy(Task::getCategory));
     }
 }

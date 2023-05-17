@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -142,5 +139,11 @@ public class TaskController {
         }
         return "index";
     }
-
+    @GetMapping("/by-category")
+    public String getTasksDividedByCategory(Model model) {
+        Map<Category, List<Task>> tasksByCategory = taskService.divideTasksByCategory();
+        model.addAttribute("tasks", tasksByCategory);
+        model.addAttribute("pageTitle", "Tasks Divided by Category");
+        return "map";
+    }
 }

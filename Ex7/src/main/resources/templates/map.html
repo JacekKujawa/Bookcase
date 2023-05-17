@@ -20,19 +20,23 @@
     </tr>
     </thead>
     <tbody>
+    <th:block th:each="entry : ${tasks}">
+        <tr>
+            <td colspan="5" style="font-weight: bold; background-color: lightgray;" th:text="${entry.key.name()}"></td>
         </tr>
-        <th:block th:each="task : ${tasks}">
+        <th:block th:each="task : ${entry.value}">
             <tr>
-                <td th:text="${task.category}"></td>
-                <td th:text="${task.description}"></td>
-                <td th:text="${task.dueDate}"></td>
-                <td th:text="${task.priority}"></td>
+                <td th:text="${task.getCategory().name()}"></td>
+                <td th:text="${task.getDescription()}"></td>
+                <td th:text="${task.getDueDate()}"></td>
+                <td th:text="${task.getPriority()}"></td>
                 <td><a th:href="@{/remove/{id}(id=${task.id})}" class="button">Remove</a></td>
             </tr>
         </th:block>
     </th:block>
     </tbody>
 </table>
+
 <h1>Select Category</h1>
 <form action="/category" method="get">
     <label for="category">Choose a category:</label>

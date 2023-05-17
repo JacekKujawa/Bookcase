@@ -112,4 +112,15 @@ public class TaskController {
         }
         return "index";
     }
+
+    @GetMapping("/description")
+    public String getTasksByDescriptionContains(Model model, @RequestParam("keyword") String keyword) {
+        List<Task> taskByByDescriptionContains = taskService.findTasksByDescriptionContains(keyword);
+        model.addAttribute("tasks", taskByByDescriptionContains);
+        model.addAttribute("pageTitle", "Tasks by description contains");
+        if (taskByByDescriptionContains.isEmpty()) {
+            model.addAttribute("Message", "No tasks found.");
+        }
+        return "index";
+    }
 }

@@ -70,4 +70,10 @@ public class TaskService {
                 .filter(task -> task.getCategory() == category)
                 .collect(Collectors.toList());
     }
+
+    public List<Task> findTasksByDescriptionContains(String keyword) {
+        return taskRepository.getAllTasks().stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 }

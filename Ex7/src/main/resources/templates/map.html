@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title th:text="${pageTitle}">Task List</title>
@@ -22,7 +22,7 @@
     <tbody>
     <th:block th:each="entry : ${tasks}">
         <tr>
-            <td colspan="5" style="font-weight: bold; background-color: lightgray;" th:text="${entry.key.name()}"></td>
+            <td colspan="5" style="font-weight: bold; background-color: lightgray;" th:text="${entry.key}"></td>
         </tr>
         <th:block th:each="task : ${entry.value}">
             <tr>
@@ -36,7 +36,6 @@
     </th:block>
     </tbody>
 </table>
-
 <h1>Select Category</h1>
 <form action="/category" method="get">
     <label for="category">Choose a category:</label>

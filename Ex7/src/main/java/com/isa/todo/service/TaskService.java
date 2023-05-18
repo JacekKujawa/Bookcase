@@ -83,4 +83,9 @@ public class TaskService {
         return taskRepository.getAllTasks().stream()
                 .collect(Collectors.groupingBy(Task::getCategory));
     }
+
+    public Map<Integer, List<Task>> divideTasksByPriority() {
+        return taskRepository.getAllTasks().stream()
+                .collect(Collectors.groupingBy(Task::getPriority));
+    }
 }

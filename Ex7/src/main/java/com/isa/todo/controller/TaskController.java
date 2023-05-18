@@ -146,4 +146,11 @@ public class TaskController {
         model.addAttribute("pageTitle", "Tasks Divided by Category");
         return "map";
     }
+    @GetMapping("/by-priority")
+    public String getTasksDividedByPriority(Model model) {
+        Map<Integer, List<Task>> tasksByPriority = taskService.divideTasksByPriority();
+        model.addAttribute("tasks", tasksByPriority);
+        model.addAttribute("pageTitle", "Tasks Divided by Priority");
+        return "map";
+    }
 }

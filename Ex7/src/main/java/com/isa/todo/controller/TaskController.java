@@ -153,4 +153,12 @@ public class TaskController {
         model.addAttribute("pageTitle", "Tasks Divided by Priority");
         return "map";
     }
+    @GetMapping("/highest-priority")
+    public String findHighestPriorityTaskForEachCategory(Model model) {
+        Map<Category, Optional<Task>> highestPriorityTasks = taskService.findHighestPriorityTaskForEachCategory();
+        model.addAttribute("tasks", highestPriorityTasks);
+        model.addAttribute("pageTitle", "Highest Priority Task for Each Category");
+        return "map2";
+    }
+
 }

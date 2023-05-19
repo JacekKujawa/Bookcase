@@ -7,7 +7,8 @@
 </head>
 <body>
 <h1 th:text="${pageTitle}">Task List</h1>
-<div style="text-align: center; color: red" th:if="${Message != null}" class="alert alert-info" th:text="${Message}"></div>
+<div style="text-align: center; color: red" th:if="${Message != null}" class="alert alert-info"
+     th:text="${Message}"></div>
 <div th:if="${param.successMessage != null}" class="alert alert-success" th:text="${param.successMessage}"></div>
 
 <table>
@@ -42,18 +43,12 @@
     </th:block>
     </tbody>
 </table>
-
-
-<h1>Select Category</h1>
-<form action="/category" method="get">
-    <label for="category">Choose a category:</label>
-    <select id="category" name="category">
-        <option value="WORK">Work</option>
-        <option value="HOME">Home</option>
-        <option value="OTHER">Other</option>
-    </select>
-    <button type="submit">Submit</button>
-</form>
-<p style="text-align: center;"><a href="/new" class="button">Add new task</a></p>
+<br><br>
+<div style="text-align: center;">
+    <a href="/menu" class="button">Menu</a>
+    <a href="/new" class="button">Add new task</a>
+    <a href="/" class="button">Tasks list</a>
+</div>
+<br><br>
 </body>
 </html>

@@ -79,6 +79,7 @@ public class TaskService {
         return taskRepository.getAllTasks().stream()
                 .min(Comparator.comparing(Task::getDueDate).thenComparingInt(Task::getPriority));
     }
+
     public Map<Category, List<Task>> divideTasksByCategory() {
         return taskRepository.getAllTasks().stream()
                 .collect(Collectors.groupingBy(Task::getCategory));
@@ -88,9 +89,11 @@ public class TaskService {
         return taskRepository.getAllTasks().stream()
                 .collect(Collectors.groupingBy(Task::getPriority));
     }
+
     public Map<Category, Optional<Task>> findHighestPriorityTaskForEachCategory() {
         return taskRepository.getAllTasks().stream()
                 .collect(Collectors.groupingBy(Task::getCategory,
                         Collectors.minBy(Comparator.comparingInt(Task::getPriority))));
     }
+
 }

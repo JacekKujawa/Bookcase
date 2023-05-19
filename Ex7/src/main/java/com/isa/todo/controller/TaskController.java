@@ -115,7 +115,7 @@ public class TaskController {
     }
 
     @GetMapping("/description")
-    public String getTasksByDescriptionContains(Model model, @RequestParam("keyword") String keyword) {
+    public String getTasksByDescriptionContains(Model model, @RequestParam("search") String keyword) {
         List<Task> taskByByDescriptionContains = taskService.findTasksByDescriptionContains(keyword);
         model.addAttribute("tasks", taskByByDescriptionContains);
         model.addAttribute("pageTitle", "Tasks by description contains");
@@ -159,6 +159,11 @@ public class TaskController {
         model.addAttribute("tasks", highestPriorityTasks);
         model.addAttribute("pageTitle", "Highest Priority Task for Each Category");
         return "map2";
+    }
+
+    @GetMapping("/menu")
+    public String menu(){
+        return "menu";
     }
 
 }

@@ -69,7 +69,7 @@ public class TaskController {
         return "index";
     }
 
-    @GetMapping("/nextDay")
+    @GetMapping("/next-day")
     public String getNextDayTasks(Model model) {
         List<Task> nextDayTasks = taskService.findTasksForNextDay();
         model.addAttribute("tasks", nextDayTasks);
@@ -92,7 +92,7 @@ public class TaskController {
     }
 
 
-    @GetMapping("/sortedset")
+    @GetMapping("/sorted-set")
     public String sortTasksByDate(Model model) {
         List<Task> sortTasks = taskService.sortTasksByDate();
         model.addAttribute("tasks", sortTasks);

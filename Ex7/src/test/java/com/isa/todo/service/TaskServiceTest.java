@@ -245,8 +245,35 @@ class TaskServiceTest {
 
 
     @Test
-    void removeTask() {
+    void removeTask_WhenTaskExists_ShouldRemoveTask() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
+        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(2));
+
+        when(taskRepository.getTaskById(task2.getId())).thenReturn(task2);
+
+        // When
+        taskService.removeTask(task2.getId());
+
+        // Then
+        verify(taskRepository, times(1)).removeTask(task2);
     }
+
+    @Test
+    void removeTask_WhenTaskDoesNotExist_ShouldNotRemoveTask() {
+        // Given
+        String nonExistentTaskId = "non-existent-task-id";
+
+        when(taskRepository.getTaskById(nonExistentTaskId)).thenReturn(null);
+
+        // When
+        taskService.removeTask(nonExistentTaskId);
+
+        // Then
+        verify(taskRepository, never()).removeTask(any());
+    }
+
 
     @Test
     void findTasksByCategory() {

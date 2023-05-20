@@ -449,6 +449,41 @@ class TaskServiceTest {
 
 
     @Test
-    void findHighestPriorityTaskForEachCategory() {
+    void findHighestPriorityTaskForEachCategory_WhenTasksExist_ShouldReturnHighestPriorityTaskForEachCategory() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
+        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
+        Task task4 = new Task("Task 4", Category.OTHER, 3, LocalDate.now().plusDays(3));
+        Task task5 = new Task("Task 5", Category.HOME, 1, LocalDate.now().plusDays(4));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4, task5));
+
+        // When
+        Map<Category, Optional<Task>> highestPriorityTasks = taskService.findHighestPriorityTaskForEachCategory();
+
+        // Then
+        assertNotNull(highestPriorityTasks);
+        assertEquals(3, highestPriorityTasks.size());
+        assertTrue(highestPriorityTasks.containsKey(Category.WORK));
+        assertTrue(highestPriorityTasks.containsKey(Category.HOME));
+        assertTrue(highestPriorityTasks.containsKey(Category.OTHER));
+        assertEquals(task1, highestPriorityTasks.get(Category.WORK).orElse(null));
+        assertEquals(task5, highestPriorityTasks.get(Category.HOME).orElse(null));
+        assertEquals(task4, highestPriorityTasks.get(Category.OTHER).orElse(null));
     }
+
+    @Test
+    void findHighestPriorityTaskForEachCategory_WhenNoTasksExist_ShouldReturnEmptyMap() {
+        // Given
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
+
+        // When
+        Map<Category, Optional<Task>> highestPriorityTasks = taskService.findHighestPriorityTaskForEachCategory();
+
+        // Then
+        assertNotNull(highestPriorityTasks);
+        assertTrue(highestPriorityTasks.isEmpty());
+    }
+
 }

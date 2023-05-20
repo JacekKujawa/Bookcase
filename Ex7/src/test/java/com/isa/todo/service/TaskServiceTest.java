@@ -276,8 +276,39 @@ class TaskServiceTest {
 
 
     @Test
-    void findTasksByCategory() {
+    void findTasksByCategory_WhenTasksExistForCategory_ShouldReturnTasksForCategory() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
+        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
+
+        // When
+        List<Task> tasks = taskService.findTasksByCategory(Category.WORK);
+
+        // Then
+        assertEquals(2, tasks.size());
+        assertTrue(tasks.contains(task1));
+        assertTrue(tasks.contains(task3));
     }
+
+    @Test
+    void findTasksByCategory_WhenNoTasksExistForCategory_ShouldReturnEmptyList() {
+        // Given
+        Task task1 = new Task("Task 1", Category.HOME, 1, LocalDate.now());
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
+        Task task3 = new Task("Task 3", Category.HOME, 3, LocalDate.now().plusDays(2));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
+
+        // When
+        List<Task> tasks = taskService.findTasksByCategory(Category.WORK);
+
+        // Then
+        assertTrue(tasks.isEmpty());
+    }
+
 
     @Test
     void findTasksByDescriptionContains() {

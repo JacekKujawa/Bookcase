@@ -411,8 +411,42 @@ class TaskServiceTest {
 
 
     @Test
-    void divideTasksByPriority() {
+    void divideTasksByPriority_WhenTasksExist_ShouldReturnTasksDividedByPriority() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
+        Task task3 = new Task("Task 3", Category.WORK, 1, LocalDate.now().plusDays(2));
+        Task task4 = new Task("Task 4", Category.OTHER, 3, LocalDate.now().plusDays(3));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
+
+        // When
+        Map<Integer, List<Task>> dividedTasks = taskService.divideTasksByPriority();
+
+        // Then
+        assertNotNull(dividedTasks);
+        assertEquals(3, dividedTasks.size());
+        assertTrue(dividedTasks.containsKey(1));
+        assertTrue(dividedTasks.containsKey(2));
+        assertTrue(dividedTasks.containsKey(3));
+        assertEquals(Arrays.asList(task1, task3), dividedTasks.get(1));
+        assertEquals(Collections.singletonList(task2), dividedTasks.get(2));
+        assertEquals(Collections.singletonList(task4), dividedTasks.get(3));
     }
+
+    @Test
+    void divideTasksByPriority_WhenNoTasksExist_ShouldReturnEmptyMap() {
+        // Given
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
+
+        // When
+        Map<Integer, List<Task>> dividedTasks = taskService.divideTasksByPriority();
+
+        // Then
+        assertNotNull(dividedTasks);
+        assertTrue(dividedTasks.isEmpty());
+    }
+
 
     @Test
     void findHighestPriorityTaskForEachCategory() {

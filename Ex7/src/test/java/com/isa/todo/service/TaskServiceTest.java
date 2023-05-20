@@ -7,10 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -376,8 +373,42 @@ class TaskServiceTest {
     }
 
     @Test
-    void divideTasksByCategory() {
+    void divideTasksByCategory_WhenTasksExist_ShouldReturnTasksDividedByCategory() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
+        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
+        Task task4 = new Task("Task 4", Category.OTHER, 1, LocalDate.now().plusDays(3));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
+
+        // When
+        Map<Category, List<Task>> dividedTasks = taskService.divideTasksByCategory();
+
+        // Then
+        assertNotNull(dividedTasks);
+        assertEquals(3, dividedTasks.size());
+        assertTrue(dividedTasks.containsKey(Category.WORK));
+        assertTrue(dividedTasks.containsKey(Category.HOME));
+        assertTrue(dividedTasks.containsKey(Category.OTHER));
+        assertEquals(Arrays.asList(task1, task3), dividedTasks.get(Category.WORK));
+        assertEquals(Collections.singletonList(task2), dividedTasks.get(Category.HOME));
+        assertEquals(Collections.singletonList(task4), dividedTasks.get(Category.OTHER));
     }
+
+    @Test
+    void divideTasksByCategory_WhenNoTasksExist_ShouldReturnEmptyMap() {
+        // Given
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
+
+        // When
+        Map<Category, List<Task>> dividedTasks = taskService.divideTasksByCategory();
+
+        // Then
+        assertNotNull(dividedTasks);
+        assertTrue(dividedTasks.isEmpty());
+    }
+
 
     @Test
     void divideTasksByPriority() {

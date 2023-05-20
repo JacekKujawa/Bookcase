@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -347,7 +348,31 @@ class TaskServiceTest {
 
 
     @Test
-    void findMostUrgentTask() {
+    void findMostUrgentTask_WhenTasksExist_ShouldReturnMostUrgentTask() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
+        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(2));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
+
+        // When
+        Optional<Task> mostUrgentTask = taskService.findMostUrgentTask();
+
+        // Then
+        assertTrue(mostUrgentTask.isPresent());
+        assertEquals(task2, mostUrgentTask.get());
+    }
+    @Test
+    void findMostUrgentTask_WhenNoTasksExist_ShouldReturnEmptyOptional() {
+        // Given
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
+
+        // When
+        Optional<Task> mostUrgentTask = taskService.findMostUrgentTask();
+
+        // Then
+        assertFalse(mostUrgentTask.isPresent());
     }
 
     @Test

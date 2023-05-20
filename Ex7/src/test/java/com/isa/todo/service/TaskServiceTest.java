@@ -81,6 +81,7 @@ class TaskServiceTest {
         // Then
         assertTrue(tasks.isEmpty());
     }
+
     @Test
     void getTaskById() {
         // Given
@@ -360,6 +361,7 @@ class TaskServiceTest {
         assertTrue(mostUrgentTask.isPresent());
         assertEquals(task2, mostUrgentTask.get());
     }
+
     @Test
     void findMostUrgentTask_WhenNoTasksExist_ShouldReturnEmptyOptional() {
         // Given

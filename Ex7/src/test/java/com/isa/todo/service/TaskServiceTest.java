@@ -181,8 +181,36 @@ class TaskServiceTest {
 
 
     @Test
-    void sortTasksByPriorityDescending() {
+    void sortTasksByPriorityDescending_WhenTasksExist_ShouldReturnTasksSortedByPriorityDescending() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
+        Task task2 = new Task("Task 2", Category.HOME, 3, LocalDate.now().plusDays(1));
+        Task task3 = new Task("Task 3", Category.OTHER, 2, LocalDate.now().plusDays(2));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
+
+        // When
+        List<Task> tasks = taskService.sortTasksByPriorityDescending();
+
+        // Then
+        assertEquals(3, tasks.size());
+        assertEquals(task2, tasks.get(2));
+        assertEquals(task3, tasks.get(1));
+        assertEquals(task1, tasks.get(0));
     }
+
+    @Test
+    void sortTasksByPriorityDescending_WhenNoTasksExist_ShouldReturnEmptyList() {
+        // Given
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
+
+        // When
+        List<Task> tasks = taskService.sortTasksByPriorityDescending();
+
+        // Then
+        assertTrue(tasks.isEmpty());
+    }
+
 
     @Test
     void sortTasksByDate() {

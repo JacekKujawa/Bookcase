@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -82,6 +83,20 @@ class TaskServiceTest {
         // Then
         assertTrue(tasks.isEmpty());
     }
+    @Test
+    void getTaskById() {
+        // Given
+        Task task = new Task("Task", Category.WORK, 1, LocalDate.now());
+
+        when(taskRepository.getTaskById(task.getId())).thenReturn(task);
+
+        // When
+        Task result = taskService.getTaskById(task.getId());
+
+        // Then
+        assertNotNull(result);
+        assertEquals(task, result);
+    }
 
 
     @Test
@@ -134,8 +149,36 @@ class TaskServiceTest {
 
 
     @Test
-    void findTasksForNextDay() {
+    void findTasksForNextDay_WhenTasksExist_ShouldReturnTasksForNextDay() {
+        // Given
+        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
+        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(2));
+        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(3));
+        Task task4 = new Task("Task 4", Category.WORK, 1, LocalDate.now().plusDays(1));
+
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
+
+        // When
+        List<Task> tasks = taskService.findTasksForNextDay();
+
+        // Then
+        assertEquals(2, tasks.size());
+        assertTrue(tasks.contains(task1));
+        assertTrue(tasks.contains(task4));
     }
+
+    @Test
+    void findTasksForNextDay_WhenNoTasksExist_ShouldReturnEmptyList() {
+        // Given
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
+
+        // When
+        List<Task> tasks = taskService.findTasksForNextDay();
+
+        // Then
+        assertTrue(tasks.isEmpty());
+    }
+
 
     @Test
     void sortTasksByPriorityDescending() {

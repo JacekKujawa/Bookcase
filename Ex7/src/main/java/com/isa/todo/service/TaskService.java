@@ -3,6 +3,8 @@ package com.isa.todo.service;
 import com.isa.todo.model.Category;
 import com.isa.todo.model.Task;
 import com.isa.todo.repository.TaskRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
     @Autowired
     public TaskService(TaskRepository taskRepository) {
@@ -28,8 +31,16 @@ public class TaskService {
     }
 
     public Task getTaskById(String id) {
-        return taskRepository.getTaskById(id);
+        Task task = taskRepository.getTaskById(id);
+        if (task != null) {
+            LOGGER.debug("Found task: {}", task);
+        } else {
+            LOGGER.debug("Task not found for id: {}", id);
+        }
+
+        return task;
     }
+
 
     public List<Task> findTasksWithPriority1() {
         return taskRepository.getAllTasks().stream()

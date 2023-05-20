@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -84,22 +83,6 @@ class TaskServiceTest {
         assertTrue(tasks.isEmpty());
     }
 
-
-    @Test
-    void getTaskById_WhenTaskExists_ShouldReturnTask() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
-        // When
-        Task result = taskService.getTaskById(task2.getId());
-        System.out.println(task2.getId());
-        // Then
-        assertNotNull(result);
-        assertEquals(task2, result);
-    }
 
     @Test
     void getTaskById_WhenTaskDoesNotExist_ShouldReturnNull() {

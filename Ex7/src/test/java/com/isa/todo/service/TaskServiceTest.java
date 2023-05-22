@@ -3,6 +3,7 @@ package com.isa.todo.service;
 import com.isa.todo.model.Category;
 import com.isa.todo.model.Task;
 import com.isa.todo.repository.TaskRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,26 +15,39 @@ import static org.mockito.Mockito.*;
 
 class TaskServiceTest {
 
+    Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
+    Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(2));
+    Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(3));
+    Task task4 = new Task("Task 4", Category.WORK, 1, LocalDate.now().plusDays(1));
     private TaskService taskService;
     private TaskRepository taskRepository;
+    private Integer i;
 
     @BeforeEach
     void setUp() {
         taskRepository = mock(TaskRepository.class);
         taskService = new TaskService(taskRepository);
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
+
+    }
+
+    @AfterEach
+    void afterEach() {
+        i++;
+
+        System.out.println("All tests finished in Test");
+
     }
 
     @Test
     void addTask() {
-        // Given
-        Task task = new Task("Task 1", Category.WORK, 1, LocalDate.now());
 
         // When
-        taskService.addTask(task);
+        taskService.addTask(task1);
 
 
         // Then
-        verify(taskRepository, times(1)).addTask(task);
+        verify(taskRepository, times(1)).addTask(task1);
     }
 
 
@@ -53,21 +67,19 @@ class TaskServiceTest {
 
     @Test
     void getAllTasks_WhenTasksExist_ShouldReturnAllTasks() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.getAllTasks();
 
         // Then
-        assertEquals(3, tasks.size());
-        assertTrue(tasks.contains(task1));
-        assertTrue(tasks.contains(task2));
-        assertTrue(tasks.contains(task3));
+        assertAll("Tasks",
+                () -> assertEquals(4, tasks.size(), "Incorrect number of tasks"),
+                () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
+                () -> assertTrue(tasks.contains(task2), "Task 2 is not present"),
+                () -> assertTrue(tasks.contains(task3), "Task 3 is not present"),
+                () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
+        );
+
     }
 
     @Test
@@ -84,86 +96,75 @@ class TaskServiceTest {
 
     @Test
     void getTaskById() {
-        // Given
-        Task task = new Task("Task", Category.WORK, 1, LocalDate.now());
 
-        when(taskRepository.getTaskById(task.getId())).thenReturn(task);
+        when(taskRepository.getTaskById(task1.getId())).thenReturn(task1);
 
         // When
-        Task result = taskService.getTaskById(task.getId());
+        Task result = taskService.getTaskById(task1.getId());
 
         // Then
-        assertNotNull(result);
-        assertEquals(task, result);
+        assertAll("Tasks",
+                () -> assertNotNull(result, "Result is null"),
+                () -> assertEquals(task1, result, "Result does not match expected task")
+        );
+
     }
 
 
     @Test
     void getTaskById_WhenTaskDoesNotExist_ShouldReturnNull() {
         // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
         when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2));
 
         // When
         Task result = taskService.getTaskById("nonexistent_id");
 
         // Then
-        assertNull(result);
+        assertNull(result, "Result is null");
     }
 
 
     @Test
     void findTasksWithPriority1_WhenTasksExist_ShouldReturnTasksWithPriority1() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 1, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.OTHER, 2, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.findTasksWithPriority1();
 
         // Then
-        assertEquals(2, tasks.size());
-        assertTrue(tasks.contains(task1));
-        assertTrue(tasks.contains(task2));
+        assertAll("Tasks",
+                () -> assertEquals(2, tasks.size(), "Incorrect number of tasks"),
+                () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
+                () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
+        );
+
     }
 
     @Test
     void findTasksWithPriority1_WhenNoTasksWithPriority1_ShouldReturnEmptyList() {
         // Given
-        Task task1 = new Task("Task 1", Category.WORK, 2, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 3, LocalDate.now().plusDays(1));
 
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2));
+        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task2, task3));
 
         // When
         List<Task> tasks = taskService.findTasksWithPriority1();
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not null");
     }
 
 
     @Test
     void findTasksForNextDay_WhenTasksExist_ShouldReturnTasksForNextDay() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(2));
-        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(3));
-        Task task4 = new Task("Task 4", Category.WORK, 1, LocalDate.now().plusDays(1));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
 
         // When
         List<Task> tasks = taskService.findTasksForNextDay();
 
-        // Then
-        assertEquals(2, tasks.size());
-        assertTrue(tasks.contains(task1));
-        assertTrue(tasks.contains(task4));
+        assertAll("Tasks",
+                () -> assertEquals(2, tasks.size(), "Incorrect number of tasks"),
+                () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
+                () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
+        );
+
     }
 
     @Test
@@ -175,27 +176,25 @@ class TaskServiceTest {
         List<Task> tasks = taskService.findTasksForNextDay();
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not null");
     }
 
 
     @Test
     void sortTasksByPriorityDescending_WhenTasksExist_ShouldReturnTasksSortedByPriorityDescending() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 3, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.OTHER, 2, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.sortTasksByPriorityDescending();
 
         // Then
-        assertEquals(3, tasks.size());
-        assertEquals(task2, tasks.get(2));
-        assertEquals(task3, tasks.get(1));
-        assertEquals(task1, tasks.get(0));
+        assertAll("Tasks",
+                () -> assertEquals(4, tasks.size(), "Incorrect number of tasks"),
+                () -> assertEquals(task1, tasks.get(0), "Task 1 does not match"),
+                () -> assertEquals(task4, tasks.get(1), "Task 4 does not match"),
+                () -> assertEquals(task2, tasks.get(2), "Task 2 does not match"),
+                () -> assertEquals(task3, tasks.get(3), "Task 3 does not match")
+        );
+
     }
 
     @Test
@@ -207,27 +206,24 @@ class TaskServiceTest {
         List<Task> tasks = taskService.sortTasksByPriorityDescending();
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not null");
     }
 
 
     @Test
     void sortTasksByDate_WhenTasksExist_ShouldReturnTasksSortedByDate() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(2));
-        Task task2 = new Task("Task 2", Category.HOME, 3, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.OTHER, 2, LocalDate.now());
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.sortTasksByDate();
 
         // Then
-        assertEquals(3, tasks.size());
-        assertEquals(task3, tasks.get(0));
-        assertEquals(task2, tasks.get(1));
-        assertEquals(task1, tasks.get(2));
+        assertAll("Tasks",
+                () -> assertEquals(4, tasks.size(), "Incorrect number of tasks"),
+                () -> assertEquals(task1, tasks.get(0), "Task 1 does not match"),
+                () -> assertEquals(task4, tasks.get(1), "Task 4 does not match"),
+                () -> assertEquals(task2, tasks.get(2), "Task 2 does not match"),
+                () -> assertEquals(task3, tasks.get(3), "Task 3 does not match")
+        );
     }
 
     @Test
@@ -239,16 +235,13 @@ class TaskServiceTest {
         List<Task> tasks = taskService.sortTasksByDate();
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not null");
     }
 
 
     @Test
     void removeTask_WhenTaskExists_ShouldRemoveTask() {
         // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(2));
 
         when(taskRepository.getTaskById(task2.getId())).thenReturn(task2);
 
@@ -276,66 +269,49 @@ class TaskServiceTest {
 
     @Test
     void findTasksByCategory_WhenTasksExistForCategory_ShouldReturnTasksForCategory() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.findTasksByCategory(Category.WORK);
 
         // Then
-        assertEquals(2, tasks.size());
-        assertTrue(tasks.contains(task1));
-        assertTrue(tasks.contains(task3));
+        assertAll("Tasks",
+                () -> assertEquals(2, tasks.size(), "Incorrect number of tasks"),
+                () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
+                () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
+        );
     }
 
     @Test
     void findTasksByCategory_WhenNoTasksExistForCategory_ShouldReturnEmptyList() {
         // Given
-        Task task1 = new Task("Task 1", Category.HOME, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.HOME, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
+        when(taskRepository.getAllTasks()).thenReturn(Collections.emptyList());
 
         // When
-        List<Task> tasks = taskService.findTasksByCategory(Category.WORK);
+        List<Task> tasks = taskService.findTasksByCategory(Category.HOME);
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not null");
     }
 
 
     @Test
     void findTasksByDescriptionContains_WhenTasksExistWithMatchingDescription_ShouldReturnMatchingTasks() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.findTasksByDescriptionContains("Task");
 
         // Then
-        assertEquals(3, tasks.size());
-        assertTrue(tasks.contains(task1));
-        assertTrue(tasks.contains(task2));
-        assertTrue(tasks.contains(task3));
+        assertAll("Tasks",
+                () -> assertEquals(4, tasks.size(), "Incorrect number of tasks"),
+                () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
+                () -> assertTrue(tasks.contains(task2), "Task 2 is not present"),
+                () -> assertTrue(tasks.contains(task3), "Task 3 is not present"),
+                () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
+        );
     }
 
     @Test
     void findTasksByDescriptionContains_WhenNoTasksExistWithMatchingDescription_ShouldReturnEmptyList() {
-        // Given
-        Task task1 = new Task("Task 1", Category.HOME, 1, LocalDate.now());
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now().plusDays(1));
-        Task task3 = new Task("Task 3", Category.HOME, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         List<Task> tasks = taskService.findTasksByDescriptionContains("Work");
@@ -347,19 +323,16 @@ class TaskServiceTest {
 
     @Test
     void findMostUrgentTask_WhenTasksExist_ShouldReturnMostUrgentTask() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
-        Task task3 = new Task("Task 3", Category.OTHER, 3, LocalDate.now().plusDays(2));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3));
 
         // When
         Optional<Task> mostUrgentTask = taskService.findMostUrgentTask();
 
         // Then
-        assertTrue(mostUrgentTask.isPresent());
-        assertEquals(task2, mostUrgentTask.get());
+        assertAll("Most Urgent Task",
+                () -> assertTrue(mostUrgentTask.isPresent(), "Most urgent task is not present"),
+                () -> assertEquals(task1, mostUrgentTask.get(), "Most urgent task does not match expected task")
+        );
+
     }
 
     @Test
@@ -371,31 +344,26 @@ class TaskServiceTest {
         Optional<Task> mostUrgentTask = taskService.findMostUrgentTask();
 
         // Then
-        assertFalse(mostUrgentTask.isPresent());
+        assertFalse(mostUrgentTask.isPresent(), "Most urgent task is present");
     }
 
     @Test
     void divideTasksByCategory_WhenTasksExist_ShouldReturnTasksDividedByCategory() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
-        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
-        Task task4 = new Task("Task 4", Category.OTHER, 1, LocalDate.now().plusDays(3));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
 
         // When
         Map<Category, List<Task>> dividedTasks = taskService.divideTasksByCategory();
 
         // Then
-        assertNotNull(dividedTasks);
-        assertEquals(3, dividedTasks.size());
-        assertTrue(dividedTasks.containsKey(Category.WORK));
-        assertTrue(dividedTasks.containsKey(Category.HOME));
-        assertTrue(dividedTasks.containsKey(Category.OTHER));
-        assertEquals(Arrays.asList(task1, task3), dividedTasks.get(Category.WORK));
-        assertEquals(Collections.singletonList(task2), dividedTasks.get(Category.HOME));
-        assertEquals(Collections.singletonList(task4), dividedTasks.get(Category.OTHER));
+        assertAll("Divided Tasks",
+                () -> assertNotNull(dividedTasks, "Divided tasks map is null"),
+                () -> assertEquals(3, dividedTasks.size(), "Incorrect number of divided categories"),
+                () -> assertTrue(dividedTasks.containsKey(Category.WORK), "Category WORK is not present"),
+                () -> assertTrue(dividedTasks.containsKey(Category.HOME), "Category HOME is not present"),
+                () -> assertTrue(dividedTasks.containsKey(Category.OTHER), "Category OTHER is not present"),
+                () -> assertEquals(Arrays.asList(task1, task4), dividedTasks.get(Category.WORK), "Tasks in WORK category do not match"),
+                () -> assertEquals(Collections.singletonList(task2), dividedTasks.get(Category.HOME), "Tasks in HOME category do not match"),
+                () -> assertEquals(Collections.singletonList(task3), dividedTasks.get(Category.OTHER), "Tasks in OTHER category do not match")
+        );
     }
 
     @Test
@@ -407,33 +375,28 @@ class TaskServiceTest {
         Map<Category, List<Task>> dividedTasks = taskService.divideTasksByCategory();
 
         // Then
-        assertNotNull(dividedTasks);
-        assertTrue(dividedTasks.isEmpty());
+        assertNotNull(dividedTasks, "Divided tasks map is null");
+        assertTrue(dividedTasks.isEmpty(), "Divided tasks map is mot empty");
     }
 
 
     @Test
     void divideTasksByPriority_WhenTasksExist_ShouldReturnTasksDividedByPriority() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
-        Task task3 = new Task("Task 3", Category.WORK, 1, LocalDate.now().plusDays(2));
-        Task task4 = new Task("Task 4", Category.OTHER, 3, LocalDate.now().plusDays(3));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4));
 
         // When
         Map<Integer, List<Task>> dividedTasks = taskService.divideTasksByPriority();
 
         // Then
-        assertNotNull(dividedTasks);
-        assertEquals(3, dividedTasks.size());
-        assertTrue(dividedTasks.containsKey(1));
-        assertTrue(dividedTasks.containsKey(2));
-        assertTrue(dividedTasks.containsKey(3));
-        assertEquals(Arrays.asList(task1, task3), dividedTasks.get(1));
-        assertEquals(Collections.singletonList(task2), dividedTasks.get(2));
-        assertEquals(Collections.singletonList(task4), dividedTasks.get(3));
+        assertAll("Divided Tasks",
+                () -> assertNotNull(dividedTasks, "Divided tasks map is null"),
+                () -> assertEquals(3, dividedTasks.size(), "Incorrect number of divided categories"),
+                () -> assertTrue(dividedTasks.containsKey(1), "Category 1 is not present"),
+                () -> assertTrue(dividedTasks.containsKey(2), "Category 2 is not present"),
+                () -> assertTrue(dividedTasks.containsKey(3), "Category 3 is not present"),
+                () -> assertEquals(Arrays.asList(task1, task4), dividedTasks.get(1), "Tasks in Category 1 do not match"),
+                () -> assertEquals(Collections.singletonList(task2), dividedTasks.get(2), "Tasks in Category 2 do not match"),
+                () -> assertEquals(Collections.singletonList(task3), dividedTasks.get(3), "Tasks in Category 3 do not match")
+        );
     }
 
     @Test
@@ -445,34 +408,28 @@ class TaskServiceTest {
         Map<Integer, List<Task>> dividedTasks = taskService.divideTasksByPriority();
 
         // Then
-        assertNotNull(dividedTasks);
-        assertTrue(dividedTasks.isEmpty());
+        assertNotNull(dividedTasks, "Divided tasks map is null");
+        assertTrue(dividedTasks.isEmpty(), "Divided tasks map is mot empty");
     }
 
 
     @Test
     void findHighestPriorityTaskForEachCategory_WhenTasksExist_ShouldReturnHighestPriorityTaskForEachCategory() {
-        // Given
-        Task task1 = new Task("Task 1", Category.WORK, 1, LocalDate.now().plusDays(1));
-        Task task2 = new Task("Task 2", Category.HOME, 2, LocalDate.now());
-        Task task3 = new Task("Task 3", Category.WORK, 3, LocalDate.now().plusDays(2));
-        Task task4 = new Task("Task 4", Category.OTHER, 3, LocalDate.now().plusDays(3));
-        Task task5 = new Task("Task 5", Category.HOME, 1, LocalDate.now().plusDays(4));
-
-        when(taskRepository.getAllTasks()).thenReturn(Arrays.asList(task1, task2, task3, task4, task5));
 
         // When
         Map<Category, Optional<Task>> highestPriorityTasks = taskService.findHighestPriorityTaskForEachCategory();
 
         // Then
-        assertNotNull(highestPriorityTasks);
-        assertEquals(3, highestPriorityTasks.size());
-        assertTrue(highestPriorityTasks.containsKey(Category.WORK));
-        assertTrue(highestPriorityTasks.containsKey(Category.HOME));
-        assertTrue(highestPriorityTasks.containsKey(Category.OTHER));
-        assertEquals(task1, highestPriorityTasks.get(Category.WORK).orElse(null));
-        assertEquals(task5, highestPriorityTasks.get(Category.HOME).orElse(null));
-        assertEquals(task4, highestPriorityTasks.get(Category.OTHER).orElse(null));
+        assertAll("Highest Priority Tasks",
+                () -> assertNotNull(highestPriorityTasks, "Highest priority tasks map is null"),
+                () -> assertEquals(3, highestPriorityTasks.size(), "Incorrect number of categories with highest priority tasks"),
+                () -> assertTrue(highestPriorityTasks.containsKey(Category.WORK), "Category WORK is not present"),
+                () -> assertTrue(highestPriorityTasks.containsKey(Category.HOME), "Category HOME is not present"),
+                () -> assertTrue(highestPriorityTasks.containsKey(Category.OTHER), "Category OTHER is not present"),
+                () -> assertEquals(task1, highestPriorityTasks.get(Category.WORK).orElse(null), "Highest priority task in WORK category does not match"),
+                () -> assertEquals(task2, highestPriorityTasks.get(Category.HOME).orElse(null), "Highest priority task in HOME category does not match"),
+                () -> assertEquals(task3, highestPriorityTasks.get(Category.OTHER).orElse(null), "Highest priority task in OTHER category does not match")
+        );
     }
 
     @Test
@@ -484,8 +441,16 @@ class TaskServiceTest {
         Map<Category, Optional<Task>> highestPriorityTasks = taskService.findHighestPriorityTaskForEachCategory();
 
         // Then
-        assertNotNull(highestPriorityTasks);
-        assertTrue(highestPriorityTasks.isEmpty());
+        assertNotNull(highestPriorityTasks, "Divided tasks map is null");
+        assertTrue(highestPriorityTasks.isEmpty(), "Divided tasks map is mot empty");
+
     }
 
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
 }

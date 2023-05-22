@@ -3,6 +3,7 @@ package com.isa.todo.service;
 import com.isa.todo.model.Category;
 import com.isa.todo.model.Task;
 import com.isa.todo.repository.TaskRepository;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,13 @@ class TaskServiceTest {
     Task task4 = new Task("Task 4", Category.WORK, 1, LocalDate.now().plusDays(1));
     private TaskService taskService;
     private TaskRepository taskRepository;
-    private Integer i;
+    private String name;
+
+    @AfterAll
+    static void afterAll() {
+
+        System.out.println(" AllTests has been completed. Thanks :)\n");
+    }
 
     @BeforeEach
     void setUp() {
@@ -33,10 +40,8 @@ class TaskServiceTest {
 
     @AfterEach
     void afterEach() {
-        i++;
 
-        System.out.println("All tests finished in Test");
-
+        System.out.println(name + " has been completed\n");
     }
 
     @Test
@@ -45,9 +50,9 @@ class TaskServiceTest {
         // When
         taskService.addTask(task1);
 
-
         // Then
         verify(taskRepository, times(1)).addTask(task1);
+        name = "addTask";
     }
 
 
@@ -62,6 +67,7 @@ class TaskServiceTest {
 
         // Then
         assertFalse(tasks.contains(task));
+        name = "addTask_WhenTaskIsNull_ShouldNotAddTask";
     }
 
 
@@ -79,7 +85,7 @@ class TaskServiceTest {
                 () -> assertTrue(tasks.contains(task3), "Task 3 is not present"),
                 () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
         );
-
+        name = "getAllTasks_WhenTasksExist_ShouldReturnAllTasks";
     }
 
     @Test
@@ -91,7 +97,8 @@ class TaskServiceTest {
         List<Task> tasks = taskService.getAllTasks();
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not empty");
+        name = "getAllTasks_WhenNoTasksExist_ShouldReturnEmptyList";
     }
 
     @Test
@@ -107,7 +114,7 @@ class TaskServiceTest {
                 () -> assertNotNull(result, "Result is null"),
                 () -> assertEquals(task1, result, "Result does not match expected task")
         );
-
+        name = "getTaskById";
     }
 
 
@@ -121,6 +128,7 @@ class TaskServiceTest {
 
         // Then
         assertNull(result, "Result is null");
+        name = "getTaskById_WhenTaskDoesNotExist_ShouldReturnNull";
     }
 
 
@@ -136,7 +144,7 @@ class TaskServiceTest {
                 () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
                 () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
         );
-
+        name = "findTasksWithPriority1_WhenTasksExist_ShouldReturnTasksWithPriority1";
     }
 
     @Test
@@ -150,6 +158,7 @@ class TaskServiceTest {
 
         // Then
         assertTrue(tasks.isEmpty(), "Result is not null");
+        name = "findTasksWithPriority1_WhenNoTasksWithPriority1_ShouldReturnEmptyList";
     }
 
 
@@ -164,7 +173,7 @@ class TaskServiceTest {
                 () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
                 () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
         );
-
+        name = "findTasksForNextDay_WhenTasksExist_ShouldReturnTasksForNextDay";
     }
 
     @Test
@@ -177,6 +186,7 @@ class TaskServiceTest {
 
         // Then
         assertTrue(tasks.isEmpty(), "Result is not null");
+        name = "findTasksForNextDay_WhenNoTasksExist_ShouldReturnEmptyList";
     }
 
 
@@ -194,7 +204,7 @@ class TaskServiceTest {
                 () -> assertEquals(task2, tasks.get(2), "Task 2 does not match"),
                 () -> assertEquals(task3, tasks.get(3), "Task 3 does not match")
         );
-
+        name = "sortTasksByPriorityDescending_WhenTasksExist_ShouldReturnTasksSortedByPriorityDescending";
     }
 
     @Test
@@ -224,6 +234,7 @@ class TaskServiceTest {
                 () -> assertEquals(task2, tasks.get(2), "Task 2 does not match"),
                 () -> assertEquals(task3, tasks.get(3), "Task 3 does not match")
         );
+        name = "sortTasksByDate_WhenTasksExist_ShouldReturnTasksSortedByDate";
     }
 
     @Test
@@ -236,6 +247,7 @@ class TaskServiceTest {
 
         // Then
         assertTrue(tasks.isEmpty(), "Result is not null");
+        name = "sortTasksByDate_WhenNoTasksExist_ShouldReturnEmptyList";
     }
 
 
@@ -250,6 +262,7 @@ class TaskServiceTest {
 
         // Then
         verify(taskRepository, times(1)).removeTask(task2);
+        name = "removeTask_WhenTaskExists_ShouldRemoveTask";
     }
 
     @Test
@@ -264,6 +277,7 @@ class TaskServiceTest {
 
         // Then
         verify(taskRepository, never()).removeTask(any());
+        name = "removeTask_WhenTaskDoesNotExist_ShouldNotRemoveTask";
     }
 
 
@@ -279,6 +293,7 @@ class TaskServiceTest {
                 () -> assertTrue(tasks.contains(task1), "Task 1 is not present"),
                 () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
         );
+        name = "findTasksByCategory_WhenTasksExistForCategory_ShouldReturnTasksForCategory";
     }
 
     @Test
@@ -290,7 +305,8 @@ class TaskServiceTest {
         List<Task> tasks = taskService.findTasksByCategory(Category.HOME);
 
         // Then
-        assertTrue(tasks.isEmpty(), "Result is not null");
+        assertTrue(tasks.isEmpty(), "Result is not empty");
+        name = "findTasksByCategory_WhenNoTasksExistForCategory_ShouldReturnEmptyList";
     }
 
 
@@ -308,6 +324,7 @@ class TaskServiceTest {
                 () -> assertTrue(tasks.contains(task3), "Task 3 is not present"),
                 () -> assertTrue(tasks.contains(task4), "Task 4 is not present")
         );
+        name = "findTasksByDescriptionContains_WhenTasksExistWithMatchingDescription_ShouldReturnMatchingTasks";
     }
 
     @Test
@@ -317,7 +334,8 @@ class TaskServiceTest {
         List<Task> tasks = taskService.findTasksByDescriptionContains("Work");
 
         // Then
-        assertTrue(tasks.isEmpty());
+        assertTrue(tasks.isEmpty(), "Result is not empty");
+        name = "findTasksByDescriptionContains_WhenNoTasksExistWithMatchingDescription_ShouldReturnEmptyList";
     }
 
 
@@ -332,7 +350,7 @@ class TaskServiceTest {
                 () -> assertTrue(mostUrgentTask.isPresent(), "Most urgent task is not present"),
                 () -> assertEquals(task1, mostUrgentTask.get(), "Most urgent task does not match expected task")
         );
-
+        name = "findMostUrgentTask_WhenTasksExist_ShouldReturnMostUrgentTask";
     }
 
     @Test
@@ -345,6 +363,7 @@ class TaskServiceTest {
 
         // Then
         assertFalse(mostUrgentTask.isPresent(), "Most urgent task is present");
+        name = "findMostUrgentTask_WhenNoTasksExist_ShouldReturnEmptyOptional";
     }
 
     @Test
@@ -364,6 +383,7 @@ class TaskServiceTest {
                 () -> assertEquals(Collections.singletonList(task2), dividedTasks.get(Category.HOME), "Tasks in HOME category do not match"),
                 () -> assertEquals(Collections.singletonList(task3), dividedTasks.get(Category.OTHER), "Tasks in OTHER category do not match")
         );
+        name = "divideTasksByCategory_WhenTasksExist_ShouldReturnTasksDividedByCategory";
     }
 
     @Test
@@ -377,6 +397,7 @@ class TaskServiceTest {
         // Then
         assertNotNull(dividedTasks, "Divided tasks map is null");
         assertTrue(dividedTasks.isEmpty(), "Divided tasks map is mot empty");
+        name = "divideTasksByCategory_WhenNoTasksExist_ShouldReturnEmptyMap";
     }
 
 
@@ -397,6 +418,7 @@ class TaskServiceTest {
                 () -> assertEquals(Collections.singletonList(task2), dividedTasks.get(2), "Tasks in Category 2 do not match"),
                 () -> assertEquals(Collections.singletonList(task3), dividedTasks.get(3), "Tasks in Category 3 do not match")
         );
+        name = "divideTasksByPriority_WhenTasksExist_ShouldReturnTasksDividedByPriority";
     }
 
     @Test
@@ -410,6 +432,7 @@ class TaskServiceTest {
         // Then
         assertNotNull(dividedTasks, "Divided tasks map is null");
         assertTrue(dividedTasks.isEmpty(), "Divided tasks map is mot empty");
+        name = "divideTasksByPriority_WhenNoTasksExist_ShouldReturnEmptyMap";
     }
 
 
@@ -430,6 +453,7 @@ class TaskServiceTest {
                 () -> assertEquals(task2, highestPriorityTasks.get(Category.HOME).orElse(null), "Highest priority task in HOME category does not match"),
                 () -> assertEquals(task3, highestPriorityTasks.get(Category.OTHER).orElse(null), "Highest priority task in OTHER category does not match")
         );
+        name = "findHighestPriorityTaskForEachCategory_WhenTasksExist_ShouldReturnHighestPriorityTaskForEachCategory";
     }
 
     @Test
@@ -443,14 +467,8 @@ class TaskServiceTest {
         // Then
         assertNotNull(highestPriorityTasks, "Divided tasks map is null");
         assertTrue(highestPriorityTasks.isEmpty(), "Divided tasks map is mot empty");
+        name = "findHighestPriorityTaskForEachCategory_WhenNoTasksExist_ShouldReturnEmptyMap";
 
     }
 
-    public int getI() {
-        return i;
-    }
-
-    public void setI(int i) {
-        this.i = i;
-    }
 }

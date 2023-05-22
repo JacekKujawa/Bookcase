@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of books</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="nav">
+    <a href="/">Home</a>
+    <a href="/book-for-today">Book for today</a>
+    <a href="/search">Search for books</a>
+</div>
+<br>
+<h1>List of books:</h1>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Pages</th>
+        <th>For kids</th>
+    </tr>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.category}"></td>
+        <td th:text="${book.pages}"></td>
+        <td th:text="${book.forKids}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

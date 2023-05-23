@@ -44,13 +44,6 @@ public class JsonTaskRepository implements TaskRepository {
     }
 
     @Override
-    public void removeTask(Task task) {
-        tasks.remove(task);
-        saveTasksToFile();
-    }
-
-
-    @Override
     public Task getTaskById(String id) {
         LOGGER.debug("Searching for task with id: {}", id);
 
@@ -88,4 +81,17 @@ public class JsonTaskRepository implements TaskRepository {
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public void removeTaskById(String id) {
+        Optional<Task> taskOptional = tasks.stream()
+                .filter(task -> task.getId().equals(id))
+                .findFirst();
+
+        taskOptional.ifPresent(task -> {
+            tasks.remove(task);
+            saveTasksToFile();
+        });
+    }
+
 }

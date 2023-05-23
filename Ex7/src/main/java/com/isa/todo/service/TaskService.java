@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
-    private final TaskRepository taskRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
+    private final TaskRepository taskRepository;
 
     @Autowired
     public TaskService(TaskRepository taskRepository) {
@@ -68,11 +68,11 @@ public class TaskService {
     }
 
     public void removeTask(String id) {
-        Task task = taskRepository.getTaskById(id);
-        if (task != null) {
-            taskRepository.removeTask(task);
+        {
+            taskRepository.removeTaskById(id);
         }
     }
+
 
     public List<Task> findTasksByCategory(Category category) {
         return taskRepository.getAllTasks().stream()

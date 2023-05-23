@@ -261,7 +261,7 @@ class TaskServiceTest {
         taskService.removeTask(task2.getId());
 
         // Then
-        verify(taskRepository, times(1)).removeTask(task2);
+        verify(taskRepository, times(1)).removeTaskById(task2.getId());
         name = "removeTask_WhenTaskExists_ShouldRemoveTask";
     }
 
@@ -276,7 +276,7 @@ class TaskServiceTest {
         taskService.removeTask(nonExistentTaskId);
 
         // Then
-        verify(taskRepository, never()).removeTask(any());
+        verify(taskRepository, never()).removeTaskById(any());
         name = "removeTask_WhenTaskDoesNotExist_ShouldNotRemoveTask";
     }
 

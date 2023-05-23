@@ -139,6 +139,7 @@ public class TaskController {
         }
         return "index";
     }
+
     @GetMapping("/by-category")
     public String getTasksDividedByCategory(Model model) {
         Map<Category, List<Task>> tasksByCategory = taskService.divideTasksByCategory();
@@ -146,6 +147,7 @@ public class TaskController {
         model.addAttribute("pageTitle", "Tasks Divided by Category");
         return "map";
     }
+
     @GetMapping("/by-priority")
     public String getTasksDividedByPriority(Model model) {
         Map<Integer, List<Task>> tasksByPriority = taskService.divideTasksByPriority();
@@ -153,6 +155,7 @@ public class TaskController {
         model.addAttribute("pageTitle", "Tasks Divided by Priority");
         return "map";
     }
+
     @GetMapping("/highest-priority")
     public String findHighestPriorityTaskForEachCategory(Model model) {
         Map<Category, Optional<Task>> highestPriorityTasks = taskService.findHighestPriorityTaskForEachCategory();
@@ -162,7 +165,7 @@ public class TaskController {
     }
 
     @GetMapping("/menu")
-    public String menu(){
+    public String menu() {
         return "menu";
     }
 

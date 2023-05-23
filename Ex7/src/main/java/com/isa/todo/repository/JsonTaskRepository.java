@@ -18,18 +18,38 @@ import java.util.Optional;
 @Repository
 public class JsonTaskRepository implements TaskRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskRepository.class);
+    static Resource resource = new ClassPathResource("tasks.json");
+    static File FILE_NAME;
+
+    static {
+        try {
+            FILE_NAME = resource.getFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private final ObjectMapper objectMapper;
     private final List<Task> tasks;
     TaskRepository taskRepository;
 
-    Resource resource = new ClassPathResource("tasks.json");
-    File FILE_NAME = resource.getFile();
-
-    public JsonTaskRepository(ObjectMapper objectMapper) throws IOException {
+    public JsonTaskRepository(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.tasks = loadTasksFromFile();
+        this.tasks = loadTasksFromFile(objectMapper);
         this.taskRepository = this;
+    }
+
+    private static List<Task> loadTasksFromFile(ObjectMapper objectMapper) {
+        try {
+            File file = new File(FILE_NAME.toURI());
+            if (file.exists()) {
+                return objectMapper.readValue(file, new TypeReference<>() {
+                });
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load tasks from file", e);
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -69,18 +89,6 @@ public class JsonTaskRepository implements TaskRepository {
         }
     }
 
-    private List<Task> loadTasksFromFile() {
-        try {
-            File file = new File(FILE_NAME.toURI());
-            if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<>() {
-                });
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load tasks from file", e);
-        }
-        return new ArrayList<>();
-    }
     @Override
     public void removeTaskById(String id) {
         Optional<Task> taskOptional = tasks.stream()

@@ -81,7 +81,6 @@ public class JsonTaskRepository implements TaskRepository {
         }
         return new ArrayList<>();
     }
-
     @Override
     public void removeTaskById(String id) {
         Optional<Task> taskOptional = tasks.stream()

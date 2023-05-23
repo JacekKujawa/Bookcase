@@ -52,7 +52,7 @@ public class TaskController {
     public String deleteTask(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
         Task task = taskService.getTaskById(id);
         if (task != null) {
-            taskService.removeTask(id);
+            taskService.removeTaskById(id);
         }
         redirectAttributes.addAttribute("successMessage", "Task remove successfully!");
         return "redirect:/";

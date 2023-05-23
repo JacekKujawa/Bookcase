@@ -67,7 +67,7 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-    public void removeTask(String id) {
+    public void removeTaskById(String id) {
         {
             taskRepository.removeTaskById(id);
         }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<h1>Task List</h1>
+<table>
+    <div th:if="${param.successMessage != null}" class="alert alert-success" th:text="${param.successMessage}"></div>
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Priority</th>
+        <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="task : ${tasks}">
+        <tr>
+            <td th:text="${task.getCategory()}"></td>
+            <td th:text="${task.getDescription()}"></td>
+            <td th:text="${task.getDueDate()}"></td>
+            <td th:text="${task.getPriority()}"></td>
+
+            <td><a th:href="@{/remove/{id}(id=${task.id})}" class="button">Remove</a></td>
+
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<p style="text-align: center;"><a href="/new" class="button">Add new task</a></p>
+</body>
+</html>

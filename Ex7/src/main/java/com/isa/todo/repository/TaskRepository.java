@@ -9,7 +9,7 @@ public interface TaskRepository {
 
     void addTask(Task task);
 
-    void removeTask(Task task);
+    void removeTaskById(String id);
 
     Task getTaskById(String id);
 
